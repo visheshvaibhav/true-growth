@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $caseStudy->title }} - True Growth Case Study</title>
+    <title>{{ $caseStudy->title }} - The True Growth Co. Case Study</title>
     @vite('resources/css/app.css')
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&family=Poppins:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/gsap@3.12.0/dist/gsap.min.js"></script>

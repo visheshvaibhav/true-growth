@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - True Growth | Digital Innovation & AI-Powered Growth</title>
+    <title>About Us - The True Growth Co. | Digital Innovation & AI-Powered Growth</title>
     @vite('resources/css/app.css')
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&family=Poppins:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/gsap@3.12.0/dist/gsap.min.js"></script>
@@ -22,7 +22,7 @@
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
                     <a href="/" class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
-                        True Growth
+                        The True Growth Co.
                     </a>
                 </div>
                 
@@ -252,7 +252,7 @@
                         <div class="relative">
                             <h3 class="text-2xl font-bold mb-4">Foundation & Vision</h3>
                             <p class="text-gray-600">
-                                True Growth was founded with a vision to democratize AI and digital innovation. We started with a small team of experts passionate about making advanced technology accessible to businesses of all sizes.
+                                The True Growth Co. was founded with a vision to democratize AI and digital innovation. We started with a small team of experts passionate about making advanced technology accessible to businesses of all sizes.
                             </p>
                         </div>
                     </div>
@@ -485,7 +485,7 @@
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <h2 class="text-4xl font-bold font-poppins">Our Team</h2>
                 <p class="mt-4 text-xl text-gray-600">
-                    Meet the innovators behind True Growth
+                    Meet the innovators behind The True Growth Co.
                 </p>
             </div>
 
@@ -494,14 +494,21 @@
                 <div class="relative group">
                     <div class="absolute inset-0.5 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-300"></div>
                     <div class="relative bg-white rounded-2xl p-8 hover:transform hover:-translate-y-1 transition duration-300">
-                        <div class="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 mx-auto mb-6"></div>
+                        <!-- Gradient Background + PNG Image -->
+                        <div class="relative w-24 h-24 mx-auto mb-6">
+                            <!-- Gradient Circle -->
+                            <div class="absolute inset-0 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500"></div>
+                            <!-- Your PNG Image -->
+                            <img src="/images/about/me.png" alt="Vishesh Vaibhav" class="relative w-24 h-24 rounded-full object-cover">
+                        </div>
                         <div class="text-center">
-                            <h3 class="text-xl font-bold">Alex Thompson</h3>
+                            <h3 class="text-xl font-bold">Vishesh Vaibhav</h3>
                             <p class="text-indigo-600 mb-4">CEO & Founder</p>
-                            <p class="text-gray-600">AI and Digital Innovation Expert with 15+ years of experience in transforming businesses.</p>
+                            <p class="text-gray-600">AI and Digital Innovation Expert with 5+ years of experience in transforming businesses.</p>
                         </div>
                     </div>
                 </div>
+
 
                 <!-- Team Member 2 -->
                 <div class="relative group">
@@ -509,7 +516,7 @@
                     <div class="relative bg-white rounded-2xl p-8 hover:transform hover:-translate-y-1 transition duration-300">
                         <div class="w-24 h-24 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 mx-auto mb-6"></div>
                         <div class="text-center">
-                            <h3 class="text-xl font-bold">Sarah Chen</h3>
+                            <h3 class="text-xl font-bold">Still Finding</h3>
                             <p class="text-purple-600 mb-4">CTO</p>
                             <p class="text-gray-600">AI Research Specialist and Tech Innovation Leader with a focus on scalable solutions.</p>
                         </div>
@@ -522,9 +529,9 @@
                     <div class="relative bg-white rounded-2xl p-8 hover:transform hover:-translate-y-1 transition duration-300">
                         <div class="w-24 h-24 rounded-full bg-gradient-to-br from-pink-500 to-red-500 mx-auto mb-6"></div>
                         <div class="text-center">
-                            <h3 class="text-xl font-bold">Michael Rodriguez</h3>
-                            <p class="text-pink-600 mb-4">Head of Design</p>
-                            <p class="text-gray-600">Creative Director with expertise in UX/UI and brand development.</p>
+                            <h3 class="text-xl font-bold">Still Finding</h3>
+                            <p class="text-pink-600 mb-4">Head of AI</p>
+                            <p class="text-gray-600">An AI expert with expertise in AI and brand development.</p>
                         </div>
                     </div>
                 </div>

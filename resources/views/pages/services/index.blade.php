@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Services - True Growth</title>
+    <title>Our Services - The True Growth Co.</title>
     @vite('resources/css/app.css')
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&family=Poppins:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/gsap@3.12.0/dist/gsap.min.js"></script>
@@ -22,7 +22,7 @@
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
                     <a href="/" class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
-                        True Growth
+                        The True Growth Co.
                     </a>
                 </div>
                 
@@ -455,7 +455,7 @@
                     <div class="bg-white rounded-2xl p-8 shadow-lg relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full -mr-32 -mt-32 opacity-50"></div>
                         <div class="relative">
-                            <h3 class="text-2xl font-bold mb-6">Why Choose True Growth?</h3>
+                            <h3 class="text-2xl font-bold mb-6">Why Choose The True Growth Co.?</h3>
                             <ul class="space-y-6">
                                 <li class="flex items-start">
                                     <div class="flex-shrink-0 w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 mr-4">

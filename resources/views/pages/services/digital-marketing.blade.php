@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Digital Marketing - True Growth')
+@section('title', 'Digital Marketing - The True Growth Co.')
 
 @section('content')
     <!-- Placeholder content -->

@@ -91,7 +91,7 @@ class CaseStudySeeder extends Seeder
             'name' => 'John Smith',
             'position' => 'CTO, E-commerce Platform',
             'avatar' => '/images/testimonials/john-smith.jpg',
-            'quote' => 'True Growth delivered an exceptional AI solution that transformed our business. The platform\'s performance exceeded our expectations.'
+            'quote' => 'The True Growth Co. delivered an exceptional AI solution that transformed our business. The platform\'s performance exceeded our expectations.'
         ]);
     }
 } 

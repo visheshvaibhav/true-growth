@@ -4,7 +4,7 @@
         <div class="flex justify-between h-20">
             <div class="flex items-center">
                 <a href="/" class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
-                    True Growth
+                    The True Growth Co.
                 </a>
             </div>
             

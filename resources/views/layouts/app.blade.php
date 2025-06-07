@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'True Growth') }}</title>
+    <title>{{ config('app.name', 'The True Growth Co.') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +26,7 @@
             <div class="flex items-center justify-between h-24">
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="flex items-center group">
-                    <span class="text-2xl font-heading font-bold text-gradient magnetic">True Growth</span>
+                    <span class="text-2xl font-heading font-bold text-gradient magnetic">The True Growth Co.</span>
                 </a>
 
                 <!-- Desktop Navigation -->
@@ -83,7 +83,7 @@
         <div class="container py-20">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
                 <div class="space-y-6">
-                    <h3 class="text-2xl font-heading font-bold text-gradient">True Growth</h3>
+                    <h3 class="text-2xl font-heading font-bold text-gradient">The True Growth Co.</h3>
                     <p class="text-text/60">Crafting exceptional digital experiences that drive growth and innovation.</p>
                     <div class="flex space-x-4">
                         <a href="#" class="text-text/40 hover:text-accent transition-colors">
@@ -138,7 +138,7 @@
             </div>
 
             <div class="border-t border-white/10 mt-16 pt-8">
-                <p class="text-center text-text/40">&copy; {{ date('Y') }} True Growth. All rights reserved.</p>
+                <p class="text-center text-text/40">&copy; {{ date('Y') }} The True Growth Co.. All rights reserved.</p>
             </div>
         </div>
     </footer>

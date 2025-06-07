@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Digital Transformation in 2024: Key Trends and Strategies - True Growth')
+@section('title', 'Digital Transformation in 2024: Key Trends and Strategies - The True Growth Co.')
 
 @section('content')
 <article class="bg-white">
@@ -150,7 +150,7 @@
                     </div>
                 </div>
                 <div class="mt-4 text-base text-gray-500">
-                    Sarah is the CTO at True Growth with over 15 years of experience in digital transformation and 
+                    Sarah is the CTO at The True Growth Co. with over 15 years of experience in digital transformation and 
                     technology strategy. She regularly writes about emerging technologies and their impact on business.
                 </div>
             </div>

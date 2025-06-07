@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Blog - True Growth')
+@section('title', 'Blog - The True Growth Co.')
 
 @section('content')
 <div class="bg-white">

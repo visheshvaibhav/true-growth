@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Careers - True Growth')
+@section('title', 'Careers - The True Growth Co.')
 
 @section('content')
 <div class="bg-white">
@@ -19,7 +19,7 @@
     <!-- Why Join Us Section -->
     <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
         <div class="text-center">
-            <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Why Join True Growth?</h2>
+            <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Why Join The True Growth Co.?</h2>
             <p class="mt-4 text-lg text-gray-500">
                 We offer more than just a job – we offer a career where you can make a real impact.
             </p>
@@ -179,7 +179,7 @@
                     Our Culture & Values
                 </h2>
                 <p class="mt-3 max-w-3xl text-lg text-gray-500">
-                    At True Growth, we believe in fostering a culture of innovation, collaboration, and continuous learning.
+                    At The True Growth Co., we believe in fostering a culture of innovation, collaboration, and continuous learning.
                 </p>
                 <div class="mt-8 space-y-6">
                     <div class="flex">

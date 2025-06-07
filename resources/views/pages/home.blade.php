@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>True Growth - Digital Innovation & AI-Powered Growth</title>
+    <title>The True Growth Co. - Digital Innovation & AI-Powered Growth</title>
     @vite('resources/css/app.css')
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&family=Poppins:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/gsap@3.12.0/dist/gsap.min.js"></script>
@@ -22,7 +22,7 @@
             <div class="flex justify-between h-20">
                 <div class="flex items-center">
                     <a href="/" class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
-                        True Growth
+                        The True Growth Co.
                     </a>
                 </div>
                 
@@ -346,7 +346,7 @@
                 <!-- Project Card 1 -->
                 <div class="group relative overflow-hidden rounded-2xl">
                     <div class="relative aspect-video overflow-hidden rounded-2xl">
-                        <img src="public/images/homepage/BN.png" alt="Project 1" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                        <img src="/images/homepage/BN.png" alt="Project 1" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                             <h3 class="text-xl font-bold">Berkeley North</h3>
@@ -358,7 +358,7 @@
                 <!-- Project Card 2 -->
                 <div class="group relative overflow-hidden rounded-2xl">
                     <div class="relative aspect-video overflow-hidden rounded-2xl">
-                        <img src="public/images/homepage/pisa.png" alt="Project 2" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                        <img src="/images/homepage/pisa.png" alt="Project 2" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                             <h3 class="text-xl font-bold">Pisa Pizza</h3>
@@ -370,7 +370,7 @@
                 <!-- Project Card 3 -->
                 <div class="group relative overflow-hidden rounded-2xl">
                     <div class="relative aspect-video overflow-hidden rounded-2xl">
-                        <img src="public/images/homepage/district.png" alt="Project 3" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                        <img src="/images/homepage/district.png" alt="Project 3" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         <div class="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                             <h3 class="text-xl font-bold">The District - Tapas + Bar</h3>
@@ -580,7 +580,7 @@
                                 <p class="text-gray-600">CEO, TechStart</p>
                             </div>
                         </div>
-                        <p class="text-gray-600 italic">"True Growth transformed our digital presence completely. Their AI-powered solutions helped us increase conversions by 150%."</p>
+                        <p class="text-gray-600 italic">"The True Growth Co. transformed our digital presence completely. Their AI-powered solutions helped us increase conversions by 150%."</p>
                     </div>
                 </div>
 
@@ -807,7 +807,7 @@
                 <!-- Company Info -->
                 <div class="space-y-6 sm:col-span-2 lg:col-span-1">
                     <a href="/" class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent inline-block">
-                        True Growth
+                        The True Growth Co.
                     </a>
                     <p class="text-gray-600 max-w-xs">
                         Empowering businesses with cutting-edge AI solutions and digital innovation for sustainable growth.
@@ -938,7 +938,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                     <div class="text-sm text-gray-600 text-center sm:text-left">
-                        © 2024 True Growth. All rights reserved.
+                        © 2024 The True Growth Co.. All rights reserved.
                     </div>
                     <div class="mt-4 sm:mt-0">
                         <ul class="flex flex-wrap justify-center sm:justify-end gap-4 sm:gap-6 text-sm text-gray-600">

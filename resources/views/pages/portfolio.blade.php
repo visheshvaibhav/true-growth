@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Our Portfolio - True Growth')
+@section('title', 'Our Portfolio - The True Growth Co.')
 
 @section('content')
 <div class="bg-white">
@@ -151,7 +151,7 @@
             <div class="text-center">
                 <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Ready to Start Your Success Story?</h2>
                 <p class="mt-4 text-lg text-gray-500">
-                    Join our growing list of successful clients and transform your business with True Growth.
+                    Join our growing list of successful clients and transform your business with The True Growth Co..
                 </p>
                 <div class="mt-8 flex justify-center">
                     <div class="inline-flex rounded-md shadow">

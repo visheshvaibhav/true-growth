@@ -26,10 +26,10 @@
                 <div class="relative mb-6 inline-block">
                     <span class="text-sm uppercase tracking-[0.3em] text-accent/80 glitch-sm" data-text="Welcome to">Welcome to</span>
                 </div>
-                <h1 class="glitch text-7xl md:text-9xl font-heading font-bold leading-tight mb-8 text-white" data-text="True Growth">
+                <h1 class="glitch text-7xl md:text-9xl font-heading font-bold leading-tight mb-8 text-white" data-text="The True Growth Co.">
                     <span class="text-gradient relative inline-block">
-                        True Growth
-                        <span class="absolute inset-0 text-gradient-2 opacity-0 hover:opacity-100 transition-opacity duration-500">True Growth</span>
+                        The True Growth Co.
+                        <span class="absolute inset-0 text-gradient-2 opacity-0 hover:opacity-100 transition-opacity duration-500">The True Growth Co.</span>
                     </span>
                 </h1>
                 <p class="text-xl md:text-2xl text-white/80 mb-12 reveal max-w-2xl mx-auto leading-relaxed">

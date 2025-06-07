@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Senior Software Engineer - Careers at True Growth')
+@section('title', 'Senior Software Engineer - Careers at The True Growth Co.')
 
 @section('content')
 <div class="bg-white">
