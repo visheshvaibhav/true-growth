@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- TG Monogram -->
+    <g>
+        <!-- T -->
+        <path d="M20 8h20v4H32v20h-4V12h-8V8z" fill="url(#gradient1)"/>
+        <!-- G -->
+        <path d="M60 20c0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12c4.127 0 7.767-2.083 9.9-5.262l-3.6-2.08C52.533 27.166 50.4 28.5 48 28.5c-4.694 0-8.5-3.806-8.5-8.5s3.806-8.5 8.5-8.5c3.333 0 6.225 1.921 7.637 4.714H48v3.572h12V20z" fill="url(#gradient2)"/>
+    </g>
+    <!-- Gradient Definitions -->
+    <defs>
+        <linearGradient id="gradient1" x1="0" y1="0" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#4F46E5"/>
+            <stop offset="100%" style="stop-color:#7C3AED"/>
+        </linearGradient>
+        <linearGradient id="gradient2" x1="0" y1="0" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#7C3AED"/>
+            <stop offset="100%" style="stop-color:#9333EA"/>
+        </linearGradient>
+    </defs>
+</svg> 

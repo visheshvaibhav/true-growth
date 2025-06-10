@@ -1,63 +1,10 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Services - The True Growth Co.</title>
-    @vite('resources/css/app.css')
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&family=Poppins:wght@100..900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/gsap@3.12.0/dist/gsap.min.js"></script>
-    <script src="https://unpkg.com/gsap@3.12.0/dist/ScrollTrigger.min.js"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-</head>
-<body class="bg-white font-inter antialiased">
+@extends('layouts.app')
+
+@section('content')
     <!-- Unique Geometric Background Pattern -->
     <div class="fixed inset-0 -z-10 opacity-[0.02]">
         <div class="absolute inset-0" style="background-image: radial-gradient(#6366f1 1px, transparent 1px); background-size: 32px 32px;"></div>
     </div>
-
-    <!-- Dynamic Navigation (Same as homepage for consistency) -->
-    <nav x-data="{ isOpen: false }" class="fixed w-full z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20">
-                <div class="flex items-center">
-                    <a href="/" class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
-                        The True Growth Co.
-                    </a>
-                </div>
-                
-                <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#services" class="text-gray-700 hover:text-indigo-600 transition-colors">Services</a>
-                    <a href="#work" class="text-gray-700 hover:text-indigo-600 transition-colors">Our Work</a>
-                    <a href="/about" class="text-gray-700 hover:text-indigo-600 transition-colors">About</a>
-                    <a href="#contact" class="px-6 py-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors">
-                        Let's Talk
-                    </a>
-                </div>
-
-                <!-- Mobile menu button -->
-                <div class="md:hidden flex items-center">
-                    <button @click="isOpen = !isOpen" class="text-gray-700">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path x-show="!isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                            <path x-show="isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </button>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Navigation -->
-        <div x-show="isOpen" class="md:hidden bg-white border-b border-gray-100">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#services" class="block px-3 py-2 text-gray-700 hover:text-indigo-600 transition-colors">Services</a>
-                <a href="#work" class="block px-3 py-2 text-gray-700 hover:text-indigo-600 transition-colors">Our Work</a>
-                <a href="/about" class="block px-3 py-2 text-gray-700 hover:text-indigo-600 transition-colors">About</a>
-                <a href="#contact" class="block px-3 py-2 text-indigo-600 font-medium">Let's Talk</a>
-            </div>
-        </div>
-    </nav>
 
     <!-- Services Hero Section - Different from homepage but maintaining aesthetic -->
     <section class="relative min-h-[70vh] flex items-center pt-20 overflow-hidden">
@@ -403,7 +350,7 @@
                                 Marketing Collateral
                             </li>
                         </ul>
-                        <a href="/services/creative-branding" class="inline-flex items-center text-yellow-600 hover:text-yellow-700 transition-colors">
+                        <a href="/services/branding" class="inline-flex items-center text-yellow-600 hover:text-yellow-700 transition-colors">
                             Learn More
                             <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -586,5 +533,4 @@
             });
         });
     </script>
-</body>
-</html>
+@endsection

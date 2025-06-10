@@ -31,6 +31,12 @@ class WorkController extends Controller
      */
     public function show($slug)
     {
+        // First try to find a static case study view
+        if (view()->exists('pages.case-studies.' . $slug)) {
+            return view('pages.case-studies.' . $slug);
+        }
+
+        // If no static view exists, try to find a dynamic case study
         $caseStudy = CaseStudy::where('slug', $slug)
             ->with(['technologies', 'processSteps', 'keyMetrics', 'testimonial', 'relatedProjects'])
             ->firstOrFail();

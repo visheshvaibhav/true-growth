@@ -1,63 +1,10 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Work - The True Growth Co. | Digital Innovation & AI Solutions</title>
-    @vite('resources/css/app.css')
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&family=Poppins:wght@100..900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/gsap@3.12.0/dist/gsap.min.js"></script>
-    <script src="https://unpkg.com/gsap@3.12.0/dist/ScrollTrigger.min.js"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-</head>
-<body class="bg-white font-inter antialiased">
+@extends('layouts.app')
+
+@section('content')
     <!-- Unique Geometric Background Pattern -->
     <div class="fixed inset-0 -z-10 opacity-[0.02]">
         <div class="absolute inset-0" style="background-image: radial-gradient(#6366f1 1px, transparent 1px); background-size: 32px 32px;"></div>
     </div>
-
-    <!-- Dynamic Navigation (Same as homepage for consistency) -->
-    <nav x-data="{ isOpen: false }" class="fixed w-full z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20">
-                <div class="flex items-center">
-                    <a href="/" class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
-                        The True Growth Co.
-                    </a>
-                </div>
-                
-                <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="/#services" class="text-gray-700 hover:text-indigo-600 transition-colors">Services</a>
-                    <a href="/work" class="text-indigo-600 font-medium">Our Work</a>
-                    <a href="/about" class="text-gray-700 hover:text-indigo-600 transition-colors">About</a>
-                    <a href="/#contact" class="px-6 py-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors">
-                        Let's Talk
-                    </a>
-                </div>
-
-                <!-- Mobile menu button -->
-                <div class="md:hidden flex items-center">
-                    <button @click="isOpen = !isOpen" class="text-gray-700">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path x-show="!isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                            <path x-show="isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </button>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Navigation -->
-        <div x-show="isOpen" class="md:hidden bg-white border-b border-gray-100">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="/#services" class="block px-3 py-2 text-gray-700 hover:text-indigo-600 transition-colors">Services</a>
-                <a href="/work" class="block px-3 py-2 text-indigo-600 font-medium">Our Work</a>
-                <a href="/about" class="block px-3 py-2 text-gray-700 hover:text-indigo-600 transition-colors">About</a>
-                <a href="/#contact" class="block px-3 py-2 text-indigo-600 font-medium">Let's Talk</a>
-            </div>
-        </div>
-    </nav>
 
     <!-- Hero Section with Dynamic Elements -->
     <section class="relative min-h-[70vh] flex items-center pt-20 overflow-hidden">
@@ -161,18 +108,20 @@
                     </button>
                 </div>
 
+
                 <!-- Project Grid -->
                 <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Project Card 1 - AI Solutions -->
-                    <div x-show="activeFilter === 'all' || activeFilter === 'ai'" class="group relative">
+
+                <!-- Project Card 1 - Web Development -->
+                    <div x-show="activeFilter === 'all' || activeFilter === 'web'|| activeFilter === 'marketing'" class="group relative">
                         <div class="relative aspect-[4/3] overflow-hidden rounded-2xl">
-                            <img src="https://placehold.co/800x600" alt="AI Analytics Dashboard" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                            <img src="/images/homepage/Bek.jpg" alt="Berkeley North" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
-                                    <span class="inline-block px-3 py-1 bg-indigo-600 text-white text-sm rounded-full mb-3">AI Solutions</span>
-                                    <h3 class="text-xl font-bold text-white mb-2">Predictive Analytics Platform</h3>
-                                    <p class="text-gray-200 text-sm mb-4">Advanced AI-powered analytics solution for enterprise decision-making</p>
-                                    <a href="/case-study/predictive-analytics" class="inline-flex items-center text-white hover:text-indigo-200 transition-colors">
+                                    <span class="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded-full mb-3">Digital Marketing + Web Development</span>
+                                    <h3 class="text-xl font-bold text-white mb-2">Berkeley North</h3>
+                                    <p class="text-gray-200 text-sm mb-4">Digital Marketing and Web Development for a Michelin Restaurant in Hamilton, ON, Canada</p>
+                                    <a href="/case-studies/berkeley-north" class="inline-flex items-center text-white hover:text-purple-200 transition-colors">
                                         View Case Study
                                         <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -184,15 +133,15 @@
                     </div>
 
                     <!-- Project Card 2 - Web Development -->
-                    <div x-show="activeFilter === 'all' || activeFilter === 'web'" class="group relative">
+                    <div x-show="activeFilter === 'all' || activeFilter === 'web'|| activeFilter === 'marketing'" class="group relative">
                         <div class="relative aspect-[4/3] overflow-hidden rounded-2xl">
-                            <img src="https://placehold.co/800x600" alt="E-commerce Platform" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                            <img src="/images/homepage/pisaaaa.webp" alt="Pisa Pizza" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
-                                    <span class="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded-full mb-3">Web Development</span>
-                                    <h3 class="text-xl font-bold text-white mb-2">Next-Gen E-commerce Platform</h3>
-                                    <p class="text-gray-200 text-sm mb-4">Modern e-commerce solution with AI-powered recommendations</p>
-                                    <a href="/case-study/ecommerce-platform" class="inline-flex items-center text-white hover:text-purple-200 transition-colors">
+                                    <span class="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded-full mb-3">Digital Marketing + Web Development</span>
+                                    <h3 class="text-xl font-bold text-white mb-2">Pisa Pizza</h3>
+                                    <p class="text-gray-200 text-sm mb-4">Digital Marketing and Web Development for a Pizza Store in Hamilton, ON, Canada</p>
+                                    <a href="/case-studies/pisa-pizza" class="inline-flex items-center text-white hover:text-purple-200 transition-colors">
                                         View Case Study
                                         <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -203,16 +152,16 @@
                         </div>
                     </div>
 
-                    <!-- Project Card 3 - Automation -->
-                    <div x-show="activeFilter === 'all' || activeFilter === 'automation'" class="group relative">
+                    <!-- Project Card 3 - Web Development -->
+                    <div x-show="activeFilter === 'all' || activeFilter === 'web'|| activeFilter === 'marketing'" class="group relative">
                         <div class="relative aspect-[4/3] overflow-hidden rounded-2xl">
-                            <img src="https://placehold.co/800x600" alt="Workflow Automation" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                            <img src="/images/homepage/dist.png" alt="The District - Tapas + Bar Hamilton" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
-                                    <span class="inline-block px-3 py-1 bg-pink-600 text-white text-sm rounded-full mb-3">Automation</span>
-                                    <h3 class="text-xl font-bold text-white mb-2">Enterprise Workflow Automation</h3>
-                                    <p class="text-gray-200 text-sm mb-4">Automated business processes with AI-driven optimization</p>
-                                    <a href="/case-study/workflow-automation" class="inline-flex items-center text-white hover:text-pink-200 transition-colors">
+                                    <span class="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded-full mb-3">Digital Marketing + Web Development</span>
+                                    <h3 class="text-xl font-bold text-white mb-2">The District - Tapas + Bar Hamilton</h3>
+                                    <p class="text-gray-200 text-sm mb-4">Digital Marketing and Web Development for a Tapas + Bar Restaurant in Hamilton, ON, Canada</p>
+                                    <a href="/case-studies/the-district" class="inline-flex items-center text-white hover:text-purple-200 transition-colors">
                                         View Case Study
                                         <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -222,6 +171,130 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Project Card 4 - Web Development -->
+                    <div x-show="activeFilter === 'all' || activeFilter === 'web'|| activeFilter === 'marketing'" class="group relative">
+                        <div class="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                            <img src="/images/homepage/heartful.png" alt="Heartful Hands" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
+                                    <span class="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded-full mb-3">Digital Marketing + Web Development</span>
+                                    <h3 class="text-xl font-bold text-white mb-2">Heartful Hands</h3>
+                                    <p class="text-gray-200 text-sm mb-4">Digital Marketing and Web Development for a Senior Home Care Services Agency in Truro, NS, Canada</p>
+                                    <a href="/case-studies/heartful-hands" class="inline-flex items-center text-white hover:text-purple-200 transition-colors">
+                                        View Case Study
+                                        <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+
+                    <!-- Project Card 5 - AI Solutions -->
+                    <div x-show="activeFilter === 'all' || activeFilter === 'ai'" class="group relative">
+                        <div class="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                            <img src="/images/homepage/pap.png" alt="AI Analytics Dashboard" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
+                                    <span class="inline-block px-3 py-1 bg-indigo-600 text-white text-sm rounded-full mb-3">AI Solutions</span>
+                                    <h3 class="text-xl font-bold text-white mb-2">Predictive Analytics Platform</h3>
+                                    <p class="text-gray-200 text-sm mb-4">Advanced AI-powered analytics solution for enterprise decision-making</p>
+                                    <a href="/case-studies/predictive-analytics" class="inline-flex items-center text-white hover:text-indigo-200 transition-colors">
+                                        View Case Study
+                                        <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 6 - Automation -->
+                    <div x-show="activeFilter === 'all' || activeFilter === 'automation'" class="group relative">
+                        <div class="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                            <img src="/images/homepage/enterprise.jpeg" alt="Workflow Automation" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
+                                    <span class="inline-block px-3 py-1 bg-pink-600 text-white text-sm rounded-full mb-3">Automation</span>
+                                    <h3 class="text-xl font-bold text-white mb-2">Enterprise Workflow Automation</h3>
+                                    <p class="text-gray-200 text-sm mb-4">Automated business processes with AI-driven optimization</p>
+                                    <a href="/case-studies/workflow-automation" class="inline-flex items-center text-white hover:text-pink-200 transition-colors">
+                                        View Case Study
+                                        <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Project Card 7 - AI Solutions -->
+                    <div x-show="activeFilter === 'all' || activeFilter === 'automation' || activeFilter === 'ai'" class="group relative">
+                        <div class="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                            <img src="images/homepage/lead.png" alt="Intelligent Sales Workflow Automation" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
+                                    <span class="inline-block px-3 py-1 bg-pink-600 text-white text-sm rounded-full mb-3">Enterprise AI Automation</span>
+                                    <h3 class="text-xl font-bold text-white mb-2">Intelligent Lead Nurturing & Sales Workflow Automation</h3>
+                                    <p class="text-gray-200 text-sm mb-4">Automating lead qualification, personalized outreach, and CRM updates using AI to streamline sales pipelines for B2B clients.</p>
+                                    <a href="/case-studies/intelligent-sales-automation" class="inline-flex items-center text-white hover:text-pink-200 transition-colors">
+                                        View Case Study
+                                        <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 8 - AI Solutions -->
+                    <div x-show="activeFilter === 'all' || activeFilter === 'ai' || activeFilter === 'marketing'" class="group relative">
+                        <div class="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                            <img src="/images/homepage/ai-driv.png" alt="AI-Driven Marketing Optimization Dashboard" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
+                                    <span class="inline-block px-3 py-1 bg-indigo-600 text-white text-sm rounded-full mb-3">AI Solutions + Digital Marketing</span>
+                                    <h3 class="text-xl font-bold text-white mb-2">AI-Driven Cross-Channel Marketing Optimization</h3>
+                                    <p class="text-gray-200 text-sm mb-4">Developed an intelligent AI engine to analyze real-time campaign data, automating bid adjustments, audience targeting, and budget allocation for maximized digital ad ROI.</p>
+                                    <a href="/case-studies/ai-marketing-optimization" class="inline-flex items-center text-white hover:text-indigo-200 transition-colors">
+                                        View Case Study
+                                        <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 9 - Digital Marketing -->
+                    <div x-show="activeFilter === 'all' || activeFilter === 'marketing'" class="group relative">
+                        <div class="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                            <img src="/images/homepage/english.jpeg" alt="Toronto Academy For English" class="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div class="absolute bottom-0 left-0 right-0 p-6 transform translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
+                                    <span class="inline-block px-3 py-1 bg-purple-600 text-white text-sm rounded-full mb-3">Digital Marketing + Web Development</span>
+                                    <h3 class="text-xl font-bold text-white mb-2">Toronto Academy For English</h3>
+                                    <p class="text-gray-200 text-sm mb-4">Digital Marketing for a English Academy Specializing in IELTS, PTE, and TOEFL in Hamilton, ON, Canada</p>
+                                    <a href="/case-studies/toronto-academy" class="inline-flex items-center text-white hover:text-purple-200 transition-colors">
+                                        View Case Study
+                                        <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    
+
                 </div>
             </div>
         </div>
@@ -247,48 +320,48 @@
                                 <div class="w-full h-full mx-auto opacity-30 blur-lg filter" style="background: linear-gradient(90deg, #6366f1 0%, #a855f7 100%);"></div>
                             </div>
                             <div class="relative aspect-[4/3] rounded-2xl overflow-hidden">
-                                <img src="https://placehold.co/800x600" alt="AI Platform Dashboard" class="object-cover w-full h-full">
+                                <img src="/images/homepage/enterprise.jpeg" alt="Workflow Automation Dashboard" class="object-cover w-full h-full">
                             </div>
                         </div>
                         
                         <!-- Content Side -->
                         <div class="mt-10 lg:mt-0">
                             <div class="space-y-6">
-                                <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full text-sm font-medium">
-                                    Enterprise AI Solution
+                                <span class="inline-block px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-sm font-medium">
+                                    Automation + AI Integration
                                 </span>
-                                <h3 class="text-3xl font-bold">Global Financial Institution AI Transformation</h3>
+                                <h3 class="text-3xl font-bold">Enterprise Workflow Automation</h3>
                                 <div class="prose prose-lg text-gray-600">
                                     <p>
-                                        Revolutionized data analysis and decision-making processes for a leading financial institution through advanced AI implementation.
+                                        Transforming a very well known company's manual processes through intelligent automation, resulting in 75% reduction in processing time and $200K annual cost savings.
                                     </p>
                                 </div>
                                 <div class="space-y-4">
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0">
-                                            <svg class="h-6 w-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg class="h-6 w-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                             </svg>
                                         </div>
                                         <div class="ml-4">
-                                            <h4 class="text-lg font-semibold">85% Faster Processing</h4>
-                                            <p class="text-gray-600">Reduced data processing time significantly</p>
+                                            <h4 class="text-lg font-semibold">75% Faster Processing</h4>
+                                            <p class="text-gray-600">Dramatic reduction in process cycle times</p>
                                         </div>
                                     </div>
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0">
-                                            <svg class="h-6 w-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg class="h-6 w-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                             </svg>
                                         </div>
                                         <div class="ml-4">
-                                            <h4 class="text-lg font-semibold">$2.5M Cost Savings</h4>
-                                            <p class="text-gray-600">Annual reduction in operational costs</p>
+                                            <h4 class="text-lg font-semibold">$200K Annual Savings</h4>
+                                            <p class="text-gray-600">Through improved efficiency and automation</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="pt-6">
-                                    <a href="/case-study/financial-ai" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
+                                    <a href="/case-studies/workflow-automation" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-pink-600 hover:bg-pink-700 transition-colors">
                                         Read Full Case Study
                                         <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -303,16 +376,26 @@
                 <!-- Case Study 2 -->
                 <div class="relative">
                     <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+                        <!-- Image Side -->
+                        <div class="relative mt-10 lg:mt-0 lg:order-1">
+                            <div class="absolute -inset-4">
+                                <div class="w-full h-full mx-auto opacity-30 blur-lg filter" style="background: linear-gradient(90deg, #a855f7 0%, #ec4899 100%);"></div>
+                            </div>
+                            <div class="relative aspect-[4/3] rounded-2xl overflow-hidden">
+                                <img src="/images/homepage/Bek.jpg" alt="Berkeley North Restaurant Website" class="object-cover w-full h-full">
+                            </div>
+                        </div>
                         <!-- Content Side -->
+                        <div class="mt-10 lg:mt-0">
                         <div class="lg:order-2">
                             <div class="space-y-6">
                                 <span class="inline-block px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-sm font-medium">
-                                    E-commerce Solution
+                                    Digital Marketing + Web Development
                                 </span>
-                                <h3 class="text-3xl font-bold">AI-Powered E-commerce Transformation</h3>
+                                <h3 class="text-3xl font-bold">Berkeley North</h3>
                                 <div class="prose prose-lg text-gray-600">
                                     <p>
-                                        Implemented an AI-driven recommendation engine and automated inventory management system for a major retail chain.
+                                        Transformed the digital presence of a Michelin restaurant in Hamilton through modern web design and targeted digital marketing strategies.
                                     </p>
                                 </div>
                                 <div class="space-y-4">
@@ -323,8 +406,8 @@
                                             </svg>
                                         </div>
                                         <div class="ml-4">
-                                            <h4 class="text-lg font-semibold">40% Increase in Sales</h4>
-                                            <p class="text-gray-600">Through personalized recommendations</p>
+                                            <h4 class="text-lg font-semibold">85% Increase in Online Reservations</h4>
+                                            <p class="text-gray-600">Through optimized website UX and targeted campaigns</p>
                                         </div>
                                     </div>
                                     <div class="flex items-center">
@@ -334,13 +417,13 @@
                                             </svg>
                                         </div>
                                         <div class="ml-4">
-                                            <h4 class="text-lg font-semibold">60% Better Inventory Accuracy</h4>
-                                            <p class="text-gray-600">Through AI-powered forecasting</p>
+                                            <h4 class="text-lg font-semibold">150% Growth in Social Media Engagement</h4>
+                                            <p class="text-gray-600">Through strategic content and community management</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="pt-6">
-                                    <a href="/case-study/ecommerce-ai" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-purple-600 hover:bg-purple-700 transition-colors">
+                                    <a href="/case-studies/berkeley-north" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-purple-600 hover:bg-purple-700 transition-colors">
                                         Read Full Case Study
                                         <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -350,15 +433,6 @@
                             </div>
                         </div>
 
-                        <!-- Image Side -->
-                        <div class="relative mt-10 lg:mt-0 lg:order-1">
-                            <div class="absolute -inset-4">
-                                <div class="w-full h-full mx-auto opacity-30 blur-lg filter" style="background: linear-gradient(90deg, #a855f7 0%, #ec4899 100%);"></div>
-                            </div>
-                            <div class="relative aspect-[4/3] rounded-2xl overflow-hidden">
-                                <img src="https://placehold.co/800x600" alt="E-commerce Platform" class="object-cover w-full h-full">
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -367,7 +441,7 @@
 
     <!-- Technology Stack Section -->
     <section class="py-20 bg-gradient-to-b from-indigo-50 to-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
             <div class="text-center max-w-3xl mx-auto">
                 <h2 class="text-4xl font-bold font-poppins">Our Technology Stack</h2>
                 <p class="mt-4 text-xl text-gray-600">
@@ -511,13 +585,11 @@
                     </div>
                 </div>
 
-                <!-- Technology Partners -->
-                <div class="mt-20">
-                    <div class="text-center">
+                <div class="mt-10">
+                    <!-- <div class="text-center">
                         <h3 class="text-2xl font-bold mb-8">Technology Partners</h3>
                     </div>
                     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
-                        <!-- Partner logos would go here -->
                         <div class="flex items-center justify-center p-4 bg-gray-50 rounded-xl">
                             <div class="w-32 h-12 bg-gray-200 rounded flex items-center justify-center text-gray-400">Partner 1</div>
                         </div>
@@ -538,7 +610,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 
@@ -566,13 +638,13 @@
                             Let's discuss how our AI-powered solutions and digital expertise can help your business achieve its goals.
                         </p>
                         <div class="mt-10 space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
-                            <a href="#contact" class="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-indigo-600 rounded-full hover:bg-indigo-700 transition-colors duration-300 w-full sm:w-auto">
+                            <a href="/contact" class="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-indigo-600 rounded-full hover:bg-indigo-700 transition-colors duration-300 w-full sm:w-auto">
                                 Start Your Project
                                 <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                 </svg>
                             </a>
-                            <a href="tel:+1234567890" class="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-indigo-600 bg-indigo-50 rounded-full hover:bg-indigo-100 transition-colors duration-300 w-full sm:w-auto">
+                            <a href="tel:+12892724063" class="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-indigo-600 bg-indigo-50 rounded-full hover:bg-indigo-100 transition-colors duration-300 w-full sm:w-auto">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                                 </svg>
@@ -675,5 +747,4 @@
             });
         });
     </script>
-</body>
-</html> 
+@endsection 

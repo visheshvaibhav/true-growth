@@ -210,7 +210,8 @@
                     Subscribe to our newsletter for the latest insights and industry trends.
                 </p>
                 <div class="mt-8 flex justify-center">
-                    <form class="sm:flex">
+                    <form action="{{ route('newsletter.subscribe') }}" method="POST" class="sm:flex">
+                        @csrf
                         <label for="email-address" class="sr-only">Email address</label>
                         <input id="email-address" name="email" type="email" autocomplete="email" required class="w-full px-5 py-3 border border-gray-300 shadow-sm placeholder-gray-400 focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:max-w-xs rounded-md" placeholder="Enter your email">
                         <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">

@@ -192,8 +192,9 @@
                 <p class="mt-2 text-gray-500">
                     Get the latest insights and trends delivered straight to your inbox.
                 </p>
-                <form class="mt-4 sm:flex">
-                    <input type="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:ring-purple-500 focus:border-purple-500" placeholder="Enter your email">
+                <form action="{{ route('newsletter.subscribe') }}" method="POST" class="mt-4 sm:flex">
+                    @csrf
+                    <input type="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:ring-purple-500 focus:border-purple-500" placeholder="Enter your email">
                     <button type="submit" class="mt-3 w-full sm:mt-0 sm:ml-3 sm:w-auto px-6 py-2 bg-purple-600 text-white font-medium rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                         Subscribe
                     </button>

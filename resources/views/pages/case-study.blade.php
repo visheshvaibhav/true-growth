@@ -1,23 +1,12 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $caseStudy->title }} - The True Growth Co. Case Study</title>
-    @vite('resources/css/app.css')
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&family=Poppins:wght@100..900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/gsap@3.12.0/dist/gsap.min.js"></script>
-    <script src="https://unpkg.com/gsap@3.12.0/dist/ScrollTrigger.min.js"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-</head>
-<body class="bg-white font-inter antialiased">
+@extends('layouts.app')
+
+@section('title', $caseStudy->title . ' - The True Growth Co. Case Study')
+
+@section('content')
     <!-- Unique Geometric Background Pattern -->
     <div class="fixed inset-0 -z-10 opacity-[0.02]">
         <div class="absolute inset-0" style="background-image: radial-gradient(#6366f1 1px, transparent 1px); background-size: 32px 32px;"></div>
     </div>
-
-    <!-- Navigation (Same as other pages) -->
-    @include('components.navigation')
 
     <!-- Hero Section -->
     <section class="relative pt-32 pb-20 overflow-hidden">
@@ -281,5 +270,4 @@
             });
         });
     </script>
-</body>
-</html> 
+@endsection 

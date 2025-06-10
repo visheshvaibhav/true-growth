@@ -10,6 +10,8 @@ use App\Http\Controllers\CareersController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LegalController;
 use App\Http\Controllers\WorkController;
+use App\Http\Controllers\ServiceInquiryController;
+use App\Http\Controllers\NewsletterController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
@@ -23,12 +25,12 @@ Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.sho
 
 // Careers Routes
 Route::get('/careers', [CareersController::class, 'index'])->name('careers');
-Route::get('/careers/{job:slug}', [CareersController::class, 'show'])->name('careers.show');
-Route::post('/careers/{job:slug}/apply', [CareersController::class, 'apply'])->name('careers.apply');
+Route::get('/careers/{slug}', [CareersController::class, 'show'])->name('careers.show');
+Route::post('/careers/{slug}/apply', [CareersController::class, 'apply'])->name('careers.apply');
 
 // Contact Routes
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 // Legal Routes
 Route::get('/privacy-policy', [LegalController::class, 'privacy'])->name('privacy');
@@ -36,4 +38,10 @@ Route::get('/terms-of-service', [LegalController::class, 'terms'])->name('terms'
 
 // Work Portfolio Routes
 Route::get('/work', [WorkController::class, 'index'])->name('work');
-Route::get('/work/{slug}', [WorkController::class, 'show'])->name('case-study');
+Route::get('/case-studies/{slug}', [WorkController::class, 'show'])->name('case-study');
+
+// Service Inquiry Routes
+Route::post('/service-inquiry/submit', [ServiceInquiryController::class, 'submit'])->name('service-inquiry.submit');
+
+// Newsletter Routes
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');

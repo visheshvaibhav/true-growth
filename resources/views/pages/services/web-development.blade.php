@@ -1,26 +1,13 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web & App Development - The True Growth Co.</title>
-    @vite('resources/css/app.css')
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&family=Poppins:wght@100..900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/gsap@3.12.0/dist/gsap.min.js"></script>
-    <script src="https://unpkg.com/gsap@3.12.0/dist/ScrollTrigger.min.js"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-</head>
-<body class="bg-white font-inter antialiased">
+@extends('layouts.app')
+
+@section('content')
     <!-- Unique Geometric Background Pattern -->
     <div class="fixed inset-0 -z-10 opacity-[0.02]">
         <div class="absolute inset-0" style="background-image: radial-gradient(#6366f1 1px, transparent 1px); background-size: 32px 32px;"></div>
     </div>
 
-    <!-- Dynamic Navigation -->
-    @include('components.navigation')
-
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section class="relative min-h-[70vh] flex items-center pt-20 overflow-hidden">
         <!-- Animated Background Elements -->
         <div class="absolute inset-0 -z-10">
             <!-- Code Animation Background -->
@@ -518,34 +505,31 @@
                         <div id="contact-form" class="relative">
                             <div class="absolute inset-0.5 bg-gradient-to-br from-emerald-600 to-blue-600 rounded-2xl blur opacity-25"></div>
                             <div class="relative bg-white rounded-2xl p-8">
-                                <form class="space-y-6">
+                                <form action="{{ route('service-inquiry.submit') }}" method="POST" class="space-y-6">
+                                    @csrf
+                                    <input type="hidden" name="service" value="Web Development">
                                     <div>
                                         <label class="block text-gray-700 font-medium mb-2">Name</label>
-                                        <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition duration-200" placeholder="Your name">
+                                        <input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition duration-200" placeholder="Your name">
                                     </div>
                                     <div>
                                         <label class="block text-gray-700 font-medium mb-2">Email</label>
-                                        <input type="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition duration-200" placeholder="your@email.com">
+                                        <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition duration-200" placeholder="your@email.com">
                                     </div>
                                     <div>
-                                        <label class="block text-gray-700 font-medium mb-2">Project Type</label>
-                                        <select class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition duration-200">
-                                            <option value="">Select project type</option>
-                                            <option value="web">Web Development</option>
-                                            <option value="mobile">Mobile App</option>
-                                            <option value="ecommerce">E-commerce</option>
-                                            <option value="other">Other</option>
-                                        </select>
+                                        <label class="block text-gray-700 font-medium mb-2">Company</label>
+                                        <input type="text" name="company" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition duration-200" placeholder="Your company">
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 font-medium mb-2">Phone</label>
+                                        <input type="tel" name="phone" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition duration-200" placeholder="Your phone number">
                                     </div>
                                     <div>
                                         <label class="block text-gray-700 font-medium mb-2">Message</label>
-                                        <textarea class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition duration-200 h-32" placeholder="Tell us about your project"></textarea>
+                                        <textarea name="message" rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition duration-200" placeholder="Tell us about your project..."></textarea>
                                     </div>
-                                    <button type="submit" class="w-full inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-gradient-to-r from-emerald-600 to-blue-600 rounded-full hover:from-emerald-700 hover:to-blue-700 transform hover:-translate-y-1 transition-all duration-300">
-                                        Send Message
-                                        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                                        </svg>
+                                    <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-emerald-600 to-blue-600 text-white font-medium rounded-lg hover:from-emerald-700 hover:to-blue-700 transition duration-200">
+                                        Send Inquiry
                                     </button>
                                 </form>
                             </div>
@@ -707,5 +691,4 @@
             });
         });
     </script>
-</body>
-</html> 
+@endsection 

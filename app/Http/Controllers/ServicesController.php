@@ -20,7 +20,7 @@ class ServicesController extends Controller
     public function show($service)
     {
         // Validate if service exists
-        $validServices = ['enterprise-ai', 'web-development', 'digital-marketing'];
+        $validServices = ['ai-growth','enterprise-ai', 'web-development', 'digital-marketing','cloud-infrastructure','branding'];
         
         if (!in_array($service, $validServices)) {
             abort(404);
