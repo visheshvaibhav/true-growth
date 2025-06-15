@@ -12,6 +12,13 @@ use App\Http\Controllers\LegalController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\ServiceInquiryController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\DigitalProductController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\WebhookController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CouponController;
+use App\Http\Controllers\ProductFileController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
@@ -45,3 +52,36 @@ Route::post('/service-inquiry/submit', [ServiceInquiryController::class, 'submit
 
 // Newsletter Routes
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+
+// Digital Products
+Route::get('/products', [DigitalProductController::class, 'index'])->name('products.index');
+Route::get('/products/{product:slug}', [DigitalProductController::class, 'show'])->name('products.show');
+Route::get('/products/{product:slug}/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
+Route::view('/thank-you', 'products.thank-you')->name('products.thank-you');
+
+// Orders & Downloads
+Route::post('/orders/{product:slug}/create', [OrderController::class, 'create'])->name('orders.create');
+Route::post('/orders/{product:slug}', [OrderController::class, 'store'])->name('orders.store');
+Route::get('/download/{order:order_number}', [DownloadController::class, 'show'])
+    ->name('download.product')
+    ->middleware('signed');
+
+// Payment Webhooks
+Route::post('/webhooks/razorpay', [WebhookController::class, 'handleRazorpay'])
+    ->name('webhooks.razorpay');
+
+// Coupon Routes
+Route::post('/coupons/validate', [CouponController::class, 'validate'])->name('coupons.validate');
+
+Route::get('/thank-you/{order}', [OrderController::class, 'showThankYou'])->name('thank-you');
+Route::get('/download/{order}', [OrderController::class, 'download'])->name('products.download');
+
+// Product File Routes
+Route::middleware(['auth'])->group(function () {
+    Route::post('/products/{product}/upload', [ProductFileController::class, 'upload'])->name('products.upload');
+});
+
+// Secure download route with signed URLs
+Route::get('/orders/{order}/download', [ProductFileController::class, 'download'])
+    ->name('products.download')
+    ->middleware('signed');
