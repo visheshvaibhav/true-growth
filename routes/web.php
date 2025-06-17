@@ -79,7 +79,7 @@ Route::post('/webhooks/razorpay', [WebhookController::class, 'handleRazorpay'])
 Route::post('/coupons/validate', [CouponController::class, 'validate'])->name('coupons.validate');
 
 Route::get('/thank-you/{order}', [OrderController::class, 'showThankYou'])->name('thank-you');
-Route::get('/download/{order}', [OrderController::class, 'download'])->name('products.download');
+Route::get('/download/{order}', [OrderController::class, 'download'])->name('orders.download');
 
 // Product File Routes
 Route::middleware(['auth'])->group(function () {
