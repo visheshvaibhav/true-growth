@@ -396,6 +396,10 @@
                     })
                 });
 
+                if (!orderResponse.ok) {
+                    throw new Error('Failed to create order. Please try again.');
+                }
+
                 const orderData = await orderResponse.json();
                 
                 if (!orderData.success) {
@@ -427,6 +431,10 @@
                                 })
                             });
 
+                            if (!verifyResponse.ok) {
+                                throw new Error('Payment verification failed. Please contact support if the amount was deducted.');
+                            }
+
                             const verifyData = await verifyResponse.json();
 
                             if (verifyData.success) {
@@ -439,9 +447,10 @@
                             }
                         } catch (error) {
                             console.error('Payment verification error:', error);
-                            alert('Payment verification failed. Please contact support if the amount was deducted.');
+                            alert(error.message || 'Payment verification failed. Please contact support if the amount was deducted.');
+                        } finally {
+                            app.loading = false;
                         }
-                        app.loading = false;
                     },
                     modal: {
                         ondismiss: function() {
@@ -462,7 +471,7 @@
                 rzp.open();
             } catch (error) {
                 console.error('Payment initialization error:', error);
-                alert('Failed to initialize payment. Please try again.');
+                alert(error.message || 'Failed to initialize payment. Please try again.');
                 app.loading = false;
             }
         };
