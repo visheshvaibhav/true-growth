@@ -1,0 +1,31 @@
+name: Deploy Laravel to GCP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.GCP_SERVER_IP }}
+          username: ${{ secrets.GCP_SERVER_USER }}
+          key: ${{ secrets.GCP_SSH_KEY }}
+          port: 22
+          script: |
+            cd /home/gcloud_thelearningartistry_com/var/www/html/true-growth
+            sudo git pull origin main
+            composer install --no-interaction --prefer-dist --optimize-autoloader
+            sudo npm install
+            sudo npm run build
+            sudo php artisan migrate --force
+            sudo php artisan config:cache
+            sudo php artisan route:cache

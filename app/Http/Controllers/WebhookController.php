@@ -15,7 +15,7 @@ class WebhookController extends Controller
 
         try {
             // Verify webhook signature
-            $expectedSignature = hash_hmac('sha256', json_encode($payload), config('services.razorpay.webhook_secret'));
+            $expectedSignature = hash_hmac('sha256', json_encode($payload), env('RAZORPAY_WEBHOOK_SECRET'));
             
             if ($signature !== $expectedSignature) {
                 Log::error('Razorpay webhook signature verification failed');

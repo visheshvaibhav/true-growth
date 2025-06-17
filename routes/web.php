@@ -19,6 +19,7 @@ use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\ProductFileController;
+use App\Http\Controllers\PaymentController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
@@ -65,6 +66,10 @@ Route::post('/orders/{product:slug}', [OrderController::class, 'store'])->name('
 Route::get('/download/{order:order_number}', [DownloadController::class, 'show'])
     ->name('download.product')
     ->middleware('signed');
+
+// Razorpay Payment Routes
+Route::post('/razorpay/order', [PaymentController::class, 'createOrder'])->name('razorpay.order');
+Route::post('/razorpay/verify', [PaymentController::class, 'verifyPayment'])->name('razorpay.verify');
 
 // Payment Webhooks
 Route::post('/webhooks/razorpay', [WebhookController::class, 'handleRazorpay'])
