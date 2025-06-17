@@ -23,7 +23,7 @@ jobs:
           script: |
             cd /var/www/html/true-growth
             git config --global --add safe.directory /var/www/html/true-growth
-            sudo git pull origin main
+            git -c safe.directory=/var/www/html/true-growth pull origin main
             composer install --no-interaction --prefer-dist --optimize-autoloader
             sudo npm install
             sudo npm run build
