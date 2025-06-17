@@ -21,7 +21,7 @@ jobs:
           key: ${{ secrets.GCP_SSH_KEY }}
           port: 22
           script: |
-            cd /home/gcloud_thelearningartistry_com/var/www/html/true-growth
+            cd /var/www/html/true-growth
             sudo git pull origin main
             composer install --no-interaction --prefer-dist --optimize-autoloader
             sudo npm install
