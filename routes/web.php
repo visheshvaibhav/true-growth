@@ -88,5 +88,5 @@ Route::middleware(['auth'])->group(function () {
 
 // Secure download route with signed URLs
 Route::get('/orders/{order}/download', [ProductFileController::class, 'download'])
-    ->name('products.download')
+    ->name('products.signed-download')
     ->middleware('signed');
