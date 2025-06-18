@@ -1,25 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="min-h-screen bg-gray-50 py-6 sm:py-12" x-data="{ 
-    step: 1,
-    formData: {
-        name: '',
-        email: '',
-        phone: '',
-        address: '',
-    },
-    errors: {},
-    loading: false,
-    validateStep1() {
-        this.errors = {};
-        if (!this.formData.name) this.errors.name = 'Name is required';
-        if (!this.formData.email) this.errors.email = 'Email is required';
-        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.formData.email)) this.errors.email = 'Please enter a valid email';
-        if (!this.formData.phone) this.errors.phone = 'Phone number is required';
-        return Object.keys(this.errors).length === 0;
-    }
-}">
+<div class="min-h-screen bg-gray-50 py-6 sm:py-12" x-data="checkoutData()" x-init="init()">
     <!-- Progress Bar - Hidden on mobile, shown on tablet and up -->
     <div class="hidden sm:block max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
         <div class="relative">
@@ -109,7 +91,7 @@
 
                             <div class="pt-4">
                                 <button 
-                                    @click="if(validateStep1()) step = 2"
+                                    @click="if(validateStep1()) { console.log('Step 1 validated, data:', formData); step = 2; }"
                                     class="w-full flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-medium rounded-xl text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 transform hover:scale-[1.02]"
                                     :class="{ 'opacity-75 cursor-not-allowed': loading }"
                                     :disabled="loading"
@@ -180,7 +162,7 @@
 
                         <div class="flex items-center justify-between pt-4">
                             <button 
-                                @click="step = 1" 
+                                @click="step = 1; console.log('Going back to step 1, preserving data:', formData);" 
                                 class="flex items-center text-sm text-indigo-600 hover:text-indigo-500 transition-colors duration-200"
                             >
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -376,175 +358,251 @@
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        window.Alpine = window.Alpine || {};
+    // Create a notification function outside of Alpine.js
+    window.createNotification = function(message, type = 'error') {
+        // Ensure message is a string
+        const safeMessage = typeof message === 'string' ? message : 'An error occurred';
         
-        window.initializePayment = async function() {
-            const app = this;
-            app.loading = true;
-            
-            // Create notification element for non-blocking messages
-            const createNotification = (message, type = 'error') => {
-                // Ensure message is a string
-                const safeMessage = typeof message === 'string' ? message : 'An error occurred';
-                
-                const notificationDiv = document.createElement('div');
-                notificationDiv.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-opacity duration-500 ${
-                    type === 'error' ? 'bg-red-50 text-red-700 border border-red-200' : 
-                    type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 
-                    'bg-blue-50 text-blue-700 border border-blue-200'
-                }`;
-                
-                notificationDiv.innerHTML = `
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            ${type === 'error' ? 
-                                '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>' : 
-                                '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>'
-                            }
-                        </div>
-                        <div class="ml-3">
-                            <p class="text-sm font-medium">${safeMessage}</p>
-                        </div>
-                        <div class="ml-auto pl-3">
-                            <button class="inline-flex text-gray-400 hover:text-gray-500">
-                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                document.body.appendChild(notificationDiv);
-                
-                // Add click event to close button
-                notificationDiv.querySelector('button').addEventListener('click', () => {
-                    notificationDiv.remove();
-                });
-                
-                // Auto-remove after 5 seconds
-                setTimeout(() => {
-                    notificationDiv.style.opacity = '0';
-                    setTimeout(() => {
-                        notificationDiv.remove();
-                    }, 500);
-                }, 5000);
-                
-                return notificationDiv;
-            };
-            
-            try {
-                // Create Razorpay order
-                const orderResponse = await fetch('{{ route('razorpay.order') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        product_id: {{ $product->id }},
-                        ...app.formData,
-                        coupon_code: app.appliedCoupon?.code
-                    })
-                });
+        const notificationDiv = document.createElement('div');
+        notificationDiv.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-opacity duration-500 ${
+            type === 'error' ? 'bg-red-50 text-red-700 border border-red-200' : 
+            type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 
+            'bg-blue-50 text-blue-700 border border-blue-200'
+        }`;
+        
+        notificationDiv.innerHTML = `
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    ${type === 'error' ? 
+                        '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>' : 
+                        '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>'
+                    }
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm font-medium">${safeMessage}</p>
+                </div>
+                <div class="ml-auto pl-3">
+                    <button class="inline-flex text-gray-400 hover:text-gray-500">
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(notificationDiv);
+        
+        // Add click event to close button
+        notificationDiv.querySelector('button').addEventListener('click', () => {
+            notificationDiv.remove();
+        });
+        
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+            notificationDiv.style.opacity = '0';
+            setTimeout(() => {
+                notificationDiv.remove();
+            }, 500);
+        }, 5000);
+        
+        return notificationDiv;
+    };
 
-                const orderData = await orderResponse.json();
-                console.log('Order creation response:', orderData);
+    function checkoutData() {
+        return {
+            step: 1,
+            formData: {
+                name: '',
+                email: '',
+                phone: '',
+                address: '',
+            },
+            errors: {},
+            loading: false,
+            validateStep1() {
+                this.errors = {};
+                if (!this.formData.name) this.errors.name = 'Name is required';
+                if (!this.formData.email) this.errors.email = 'Email is required';
+                else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.formData.email)) this.errors.email = 'Please enter a valid email';
+                if (!this.formData.phone) this.errors.phone = 'Phone number is required';
                 
-                if (!orderData.success) {
-                    // Handle validation errors specifically
-                    if (orderData.errors) {
-                        const errorMessages = [];
-                        for (const field in orderData.errors) {
-                            errorMessages.push(orderData.errors[field].join(' '));
-                            
-                            // Update Alpine.js form errors
-                            if (app.formData && field in app.formData) {
-                                app.errors[field] = orderData.errors[field][0];
-                            }
-                        }
-                        throw new Error(errorMessages.join('<br>') || orderData.message || 'Failed to create order');
-                    } else {
-                        throw new Error(orderData.message || 'Failed to create order');
+                // Debug validation
+                console.log('Validating step 1:', this.formData, 'Errors:', this.errors);
+                
+                return Object.keys(this.errors).length === 0;
+            },
+            init() {
+                // Debug Alpine.js data changes
+                this.$watch('formData', (value) => {
+                    console.log('formData changed:', value);
+                    
+                    // Store in local storage for persistence
+                    localStorage.setItem('checkout_form_data', JSON.stringify(value));
+                });
+                
+                // Try to restore from local storage
+                const savedData = localStorage.getItem('checkout_form_data');
+                if (savedData) {
+                    try {
+                        const parsedData = JSON.parse(savedData);
+                        this.formData = {...this.formData, ...parsedData};
+                        console.log('Restored form data from storage:', this.formData);
+                    } catch (e) {
+                        console.error('Failed to parse saved form data:', e);
                     }
                 }
+            },
+            initializePayment() {
+                this.loading = true;
+                
+                // Debug Alpine.js data
+                console.log('Starting payment with formData:', this.formData);
+                
+                // Check if formData exists and is properly initialized
+                if (!this.formData || !this.formData.name || !this.formData.email || !this.formData.phone) {
+                    console.error('Missing required form data:', this.formData);
+                    window.createNotification('Please fill in all required fields');
+                    this.loading = false;
+                    
+                    // If we're on step 2 but form data is missing, go back to step 1
+                    if (this.step === 2) {
+                        this.step = 1;
+                    }
+                    return;
+                }
+                
+                this.processPayment();
+            },
+            async processPayment() {
+                try {
+                    // Create the payload with explicit values to ensure they're included
+                    const payload = {
+                        product_id: {{ $product->id }},
+                        name: this.formData.name,
+                        email: this.formData.email,
+                        phone: this.formData.phone,
+                        coupon_code: this.appliedCoupon?.code
+                    };
+                    
+                    console.log('Sending payload:', payload);
+                    
+                    // Create Razorpay order
+                    const orderResponse = await fetch('{{ route('razorpay.order') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify(payload)
+                    });
 
-                // Initialize Razorpay payment
-                const options = {
-                    key: '{{ env('RAZORPAY_KEY') }}',
-                    amount: orderData.amount,
-                    currency: 'INR',
-                    name: '{{ config('app.name') }}',
-                    description: '{{ $product->name }}',
-                    order_id: orderData.order_id,
-                    handler: async function(response) {
-                        try {
-                            // Verify payment with backend
-                            const verifyResponse = await fetch('{{ route('razorpay.verify') }}', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                },
-                                body: JSON.stringify({
-                                    temp_order_id: orderData.temp_order_id,
-                                    razorpay_payment_id: response.razorpay_payment_id,
-                                    razorpay_order_id: response.razorpay_order_id,
-                                    razorpay_signature: response.razorpay_signature
-                                })
-                            });
-
-                            const verifyData = await verifyResponse.json();
-                            console.log('Payment verification response:', verifyData);
-
-                            if (verifyData.success) {
-                                app.step = 3;
-                                setTimeout(() => {
-                                    window.location.href = '{{ route('products.thank-you') }}?order=' + verifyData.order.order_number;
-                                }, 2000);
-                            } else {
-                                // Handle validation errors specifically
-                                if (verifyData.errors) {
-                                    const errorMessages = [];
-                                    for (const field in verifyData.errors) {
-                                        errorMessages.push(verifyData.errors[field].join(' '));
-                                    }
-                                    throw new Error(errorMessages.join('<br>') || verifyData.message || 'Payment verification failed');
-                                } else {
-                                    throw new Error(verifyData.message || 'Payment verification failed');
+                    const orderData = await orderResponse.json();
+                    console.log('Order creation response:', orderData);
+                    
+                    if (!orderData.success) {
+                        // Handle validation errors specifically
+                        if (orderData.errors) {
+                            const errorMessages = [];
+                            for (const field in orderData.errors) {
+                                errorMessages.push(orderData.errors[field].join(' '));
+                                
+                                // Update Alpine.js form errors
+                                if (this.formData && field in this.formData) {
+                                    this.errors[field] = orderData.errors[field][0];
                                 }
                             }
-                        } catch (error) {
-                            console.error('Payment verification error:', error);
-                            createNotification(error.message || 'Payment verification failed. Please contact support if the amount was deducted.');
-                        } finally {
-                            app.loading = false;
+                            throw new Error(errorMessages.join('<br>') || orderData.message || 'Failed to create order');
+                        } else {
+                            throw new Error(orderData.message || 'Failed to create order');
                         }
-                    },
-                    modal: {
-                        ondismiss: function() {
-                            app.loading = false;
-                        }
-                    },
-                    prefill: {
-                        name: app.formData.name,
-                        email: app.formData.email,
-                        contact: app.formData.phone
-                    },
-                    theme: {
-                        color: '#4F46E5'
                     }
-                };
 
-                const rzp = new Razorpay(options);
-                rzp.open();
-            } catch (error) {
-                console.error('Payment initialization error:', error);
-                createNotification(error.message || 'Failed to initialize payment. Please try again.');
-                app.loading = false;
+                    // Initialize Razorpay payment
+                    const options = {
+                        key: '{{ env('RAZORPAY_KEY') }}',
+                        amount: orderData.amount,
+                        currency: 'INR',
+                        name: '{{ config('app.name') }}',
+                        description: '{{ $product->name }}',
+                        order_id: orderData.order_id,
+                        handler: async (response) => {
+                            try {
+                                // Verify payment with backend
+                                const verifyResponse = await fetch('{{ route('razorpay.verify') }}', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    },
+                                    body: JSON.stringify({
+                                        temp_order_id: orderData.temp_order_id,
+                                        razorpay_payment_id: response.razorpay_payment_id,
+                                        razorpay_order_id: response.razorpay_order_id,
+                                        razorpay_signature: response.razorpay_signature
+                                    })
+                                });
+
+                                const verifyData = await verifyResponse.json();
+                                console.log('Payment verification response:', verifyData);
+
+                                if (verifyData.success) {
+                                    this.step = 3;
+                                    setTimeout(() => {
+                                        window.location.href = '{{ route('products.thank-you') }}?order=' + verifyData.order.order_number;
+                                    }, 2000);
+                                } else {
+                                    // Handle validation errors specifically
+                                    if (verifyData.errors) {
+                                        const errorMessages = [];
+                                        for (const field in verifyData.errors) {
+                                            errorMessages.push(verifyData.errors[field].join(' '));
+                                        }
+                                        throw new Error(errorMessages.join('<br>') || verifyData.message || 'Payment verification failed');
+                                    } else {
+                                        throw new Error(verifyData.message || 'Payment verification failed');
+                                    }
+                                }
+                            } catch (error) {
+                                console.error('Payment verification error:', error);
+                                window.createNotification(error.message || 'Payment verification failed. Please contact support if the amount was deducted.');
+                            } finally {
+                                this.loading = false;
+                            }
+                        },
+                        modal: {
+                            ondismiss: () => {
+                                this.loading = false;
+                            }
+                        },
+                        prefill: {
+                            name: this.formData.name,
+                            email: this.formData.email,
+                            contact: this.formData.phone
+                        },
+                        theme: {
+                            color: '#4F46E5'
+                        }
+                    };
+
+                    const rzp = new Razorpay(options);
+                    rzp.open();
+                } catch (error) {
+                    console.error('Payment initialization error:', error);
+                    window.createNotification(error.message || 'Failed to initialize payment. Please try again.');
+                    this.loading = false;
+                }
             }
         };
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add a global event listener for Alpine initialization
+        document.addEventListener('alpine:initialized', function() {
+            console.log('Alpine.js initialized successfully');
+        });
+
+        window.Alpine = window.Alpine || {};
     });
 </script>
 @endpush 

@@ -33,7 +33,11 @@ class PaymentController extends Controller
     {
         try {
             // Log the incoming request data for debugging
-            Log::info('Razorpay order creation request:', $request->all());
+            Log::info('Razorpay order creation request raw data:', [
+                'request_all' => $request->all(),
+                'content_type' => $request->header('Content-Type'),
+                'input' => $request->getContent(),
+            ]);
             
             // Validate request data
             $validator = Validator::make($request->all(), [
@@ -45,7 +49,11 @@ class PaymentController extends Controller
             ]);
 
             if ($validator->fails()) {
-                Log::warning('Razorpay order validation failed:', $validator->errors()->toArray());
+                Log::warning('Razorpay order validation failed:', [
+                    'errors' => $validator->errors()->toArray(),
+                    'request_data' => $request->all()
+                ]);
+                
                 return response()->json([
                     'success' => false,
                     'message' => 'Validation failed',
@@ -105,7 +113,11 @@ class PaymentController extends Controller
                 'temp_order_id' => $tempOrder->id
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
-            Log::error('Razorpay order validation failed: ' . $e->getMessage());
+            Log::error('Razorpay order validation failed: ' . $e->getMessage(), [
+                'errors' => $e->errors(),
+                'request_data' => $request->all()
+            ]);
+            
             return response()->json([
                 'success' => false,
                 'message' => 'Validation failed',
@@ -113,7 +125,8 @@ class PaymentController extends Controller
             ], 422);
         } catch (\Exception $e) {
             Log::error('Razorpay order creation failed: ' . $e->getMessage(), [
-                'request' => $request->all()
+                'request' => $request->all(),
+                'trace' => $e->getTraceAsString()
             ]);
             
             return response()->json([
