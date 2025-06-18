@@ -527,8 +527,19 @@
                     }
 
                     // Initialize Razorpay payment
+                    const razorpayKey = '{{ $razorpayKey ?? env('RAZORPAY_KEY') }}';
+                    console.log('Razorpay key (first 6 chars):', razorpayKey ? razorpayKey.substring(0, 6) + '...' : 'MISSING');
+
+                    // Validate key before proceeding
+                    if (!razorpayKey) {
+                        console.error('Razorpay key is missing!');
+                        window.createNotification('Payment configuration error: Missing API key. Please contact support.', 'error');
+                        this.loading = false;
+                        return;
+                    }
+
                     const options = {
-                        key: '{{ env('RAZORPAY_KEY') }}',
+                        key: razorpayKey,
                         amount: orderData.amount,
                         currency: 'INR',
                         name: '{{ config('app.name') }}',
