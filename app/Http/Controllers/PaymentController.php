@@ -104,32 +104,65 @@ class PaymentController extends Controller
                 ]
             ]);
 
-            // Store temporary order in database
-            $tempOrder = Order::create([
-                'order_number' => 'ORD-' . strtoupper(uniqid()),
-                'digital_product_id' => $product->id,
-                'customer_name' => $request->name,
-                'customer_email' => $request->email,
-                'customer_phone' => $request->phone,
-                'amount' => $amount,
-                'original_amount' => $product->current_price,
-                'discount_amount' => $request->coupon_code ? ($product->current_price - $amount) : 0,
-                'coupon_code' => $request->coupon_code,
-                'razorpay_order_id' => $order->id,
-                'status' => 'pending'
-            ]);
-
-            Log::info('Razorpay order created successfully', [
-                'order_id' => $order->id,
-                'temp_order_id' => $tempOrder->id
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'order_id' => $order->id,
-                'amount' => round($amount * 100),
-                'temp_order_id' => $tempOrder->id
-            ]);
+            // Store temporary order in database - with error handling for schema issues
+            try {
+                $orderData = [
+                    'order_number' => 'ORD-' . strtoupper(uniqid()),
+                    'digital_product_id' => $product->id,
+                    'customer_name' => $request->name,
+                    'customer_email' => $request->email,
+                    'customer_phone' => $request->phone,
+                    'amount' => $amount,
+                    'original_amount' => $product->current_price,
+                    'discount_amount' => $request->coupon_code ? ($product->current_price - $amount) : 0,
+                    'coupon_code' => $request->coupon_code,
+                    'razorpay_order_id' => $order->id,
+                    'status' => 'pending'
+                ];
+                
+                // Add empty values for required fields to avoid NOT NULL constraint errors
+                $orderData['razorpay_payment_id'] = '';
+                $orderData['razorpay_signature'] = '';
+                
+                // If we encounter a schema mismatch, log detailed information
+                $tempOrder = Order::create($orderData);
+                
+                Log::info('Razorpay order created successfully', [
+                    'order_id' => $order->id,
+                    'temp_order_id' => $tempOrder->id
+                ]);
+                
+                return response()->json([
+                    'success' => true,
+                    'order_id' => $order->id,
+                    'amount' => round($amount * 100),
+                    'temp_order_id' => $tempOrder->id
+                ]);
+                
+            } catch (\Illuminate\Database\QueryException $e) {
+                // Special handling for database constraint errors
+                Log::error('Database error when creating order: ' . $e->getMessage(), [
+                    'sql' => $e->getSql() ?? 'Unknown SQL',
+                    'bindings' => $e->getBindings() ?? [],
+                    'code' => $e->getCode(),
+                    'error_info' => $e->errorInfo ?? []
+                ]);
+                
+                // For SQLite's integrity constraint violation
+                if (str_contains($e->getMessage(), 'Integrity constraint violation') && 
+                    str_contains($e->getMessage(), 'razorpay_payment_id')) {
+                    
+                    // Return a more helpful error message
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Database constraint error: The orders table schema requires razorpay_payment_id. Please run the migration to fix this issue.',
+                        'error_code' => 'DB_CONSTRAINT_ERROR'
+                    ], 500);
+                }
+                
+                // Re-throw to be caught by the general exception handler
+                throw $e;
+            }
         } catch (\Illuminate\Validation\ValidationException $e) {
             Log::error('Razorpay order validation failed: ' . $e->getMessage(), [
                 'errors' => $e->errors(),

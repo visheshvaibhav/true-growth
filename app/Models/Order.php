@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'digital_product_id',
         'order_number',
@@ -62,5 +65,19 @@ class Order extends Model
         return route('download.product', [
             'order' => $this->order_number,
         ]);
+    }
+
+    public function getStatusLabelAttribute()
+    {
+        $labels = [
+            'pending' => 'Pending',
+            'processing' => 'Processing',
+            'completed' => 'Completed',
+            'cancelled' => 'Cancelled',
+            'refunded' => 'Refunded',
+            'failed' => 'Failed',
+        ];
+        
+        return $labels[$this->status] ?? ucfirst($this->status);
     }
 } 
