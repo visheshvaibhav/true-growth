@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@push('head')
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-@endpush
-
 @section('content')
 <div class="min-h-screen bg-gray-50 py-6 sm:py-12" x-data="checkoutData()" x-init="init()">
     <!-- Progress Bar - Hidden on mobile, shown on tablet and up -->
@@ -360,6 +356,7 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
     // Create a notification function outside of Alpine.js
     window.createNotification = function(message, type = 'error') {
@@ -548,24 +545,6 @@
                         name: '{{ config('app.name') }}',
                         description: '{{ $product->name }}',
                         order_id: orderData.order_id,
-                        image: '{{ asset('images/logo.png') }}',
-                        prefill: {
-                            name: this.formData.name,
-                            email: this.formData.email,
-                            contact: this.formData.phone
-                        },
-                        theme: {
-                            color: '#4F46E5',
-                            backdrop_color: 'rgba(0, 0, 0, 0.7)'
-                        },
-                        modal: {
-                            ondismiss: () => {
-                                this.loading = false;
-                            },
-                            animation: true,
-                            backdropclose: false,
-                            escape: true
-                        },
                         handler: async (response) => {
                             try {
                                 // Verify payment with backend
@@ -589,7 +568,7 @@
                                 if (verifyData.success) {
                                     this.step = 3;
                                     setTimeout(() => {
-                                        window.location.href = '/thank-you/' + verifyData.order.order_number;
+                                        window.location.href = '{{ route('products.thank-you') }}?order=' + verifyData.order.order_number;
                                     }, 2000);
                                 } else {
                                     // Handle validation errors specifically
@@ -609,20 +588,24 @@
                             } finally {
                                 this.loading = false;
                             }
+                        },
+                        modal: {
+                            ondismiss: () => {
+                                this.loading = false;
+                            }
+                        },
+                        prefill: {
+                            name: this.formData.name,
+                            email: this.formData.email,
+                            contact: this.formData.phone
+                        },
+                        theme: {
+                            color: '#4F46E5'
                         }
                     };
 
                     const rzp = new Razorpay(options);
-                    
-                    // Add error handling for Razorpay modal display issues
-                    try {
-                        rzp.open();
-                        console.log('Razorpay checkout opened successfully');
-                    } catch (rzpError) {
-                        console.error('Error opening Razorpay checkout:', rzpError);
-                        window.createNotification('Failed to open payment window. Please try again or contact support.', 'error');
-                        this.loading = false;
-                    }
+                    rzp.open();
                 } catch (error) {
                     console.error('Payment initialization error:', error);
                     window.createNotification(error.message || 'Failed to initialize payment. Please try again.');

@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         console.log('Order verification response:', data);
 
                         if (data.success) {
-                            window.location.href = '/thank-you/' + data.order.order_number;
+                            window.location.href = '{{ route('products.thank-you') }}?order=' + data.order.order_number;
                         } else {
                             // Handle validation errors specifically
                             if (data.errors) {

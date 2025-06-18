@@ -58,6 +58,26 @@ Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
 Route::get('/products', [DigitalProductController::class, 'index'])->name('products.index');
 Route::get('/products/{product:slug}', [DigitalProductController::class, 'show'])->name('products.show');
 Route::get('/products/{product:slug}/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
+Route::get('/thank-you', function() {
+    // Get the order number from the request
+    $orderNumber = request('order');
+    
+    if (!$orderNumber) {
+        return redirect()->route('home');
+    }
+    
+    // Find the order
+    $order = \App\Models\Order::where('order_number', $orderNumber)->firstOrFail();
+    
+    // Generate a signed download URL that expires in 24 hours
+    $downloadUrl = \Illuminate\Support\Facades\URL::temporarySignedRoute(
+        'download.product',
+        now()->addHours(24),
+        ['order' => $order->order_number]
+    );
+    
+    return view('products.thank-you', compact('order', 'downloadUrl'));
+})->name('products.thank-you');
 
 // Orders & Downloads
 Route::post('/orders/{product:slug}/create', [OrderController::class, 'create'])->name('orders.create');
@@ -77,7 +97,7 @@ Route::post('/webhooks/razorpay', [WebhookController::class, 'handleRazorpay'])
 // Coupon Routes
 Route::post('/coupons/validate', [CouponController::class, 'validate'])->name('coupons.validate');
 
-Route::get('/thank-you/{order_number}', [OrderController::class, 'showThankYou'])->name('thank-you');
+Route::get('/thank-you/{order}', [OrderController::class, 'showThankYou'])->name('thank-you');
 Route::get('/download/{order}', [OrderController::class, 'download'])->name('orders.download');
 
 // Product File Routes
