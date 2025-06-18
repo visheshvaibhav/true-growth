@@ -446,14 +446,25 @@
                     })
                 });
 
-                if (!orderResponse.ok) {
-                    throw new Error('Failed to create order. Please try again.');
-                }
-
                 const orderData = await orderResponse.json();
+                console.log('Order creation response:', orderData);
                 
                 if (!orderData.success) {
-                    throw new Error(orderData.message || 'Failed to create order');
+                    // Handle validation errors specifically
+                    if (orderData.errors) {
+                        const errorMessages = [];
+                        for (const field in orderData.errors) {
+                            errorMessages.push(orderData.errors[field].join(' '));
+                            
+                            // Update Alpine.js form errors
+                            if (field in app.formData) {
+                                app.errors[field] = orderData.errors[field][0];
+                            }
+                        }
+                        throw new Error(errorMessages.join('<br>') || orderData.message || 'Failed to create order');
+                    } else {
+                        throw new Error(orderData.message || 'Failed to create order');
+                    }
                 }
 
                 // Initialize Razorpay payment
@@ -481,11 +492,8 @@
                                 })
                             });
 
-                            if (!verifyResponse.ok) {
-                                throw new Error('Payment verification failed. Please contact support if the amount was deducted.');
-                            }
-
                             const verifyData = await verifyResponse.json();
+                            console.log('Payment verification response:', verifyData);
 
                             if (verifyData.success) {
                                 app.step = 3;
@@ -493,7 +501,16 @@
                                     window.location.href = '{{ route('products.thank-you') }}?order=' + verifyData.order.order_number;
                                 }, 2000);
                             } else {
-                                throw new Error(verifyData.message || 'Payment verification failed');
+                                // Handle validation errors specifically
+                                if (verifyData.errors) {
+                                    const errorMessages = [];
+                                    for (const field in verifyData.errors) {
+                                        errorMessages.push(verifyData.errors[field].join(' '));
+                                    }
+                                    throw new Error(errorMessages.join('<br>') || verifyData.message || 'Payment verification failed');
+                                } else {
+                                    throw new Error(verifyData.message || 'Payment verification failed');
+                                }
                             }
                         } catch (error) {
                             console.error('Payment verification error:', error);

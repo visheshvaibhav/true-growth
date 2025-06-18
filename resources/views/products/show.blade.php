@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     product_id: {{ $product->id }},
                     name: form.name.value,
                     email: form.email.value,
-                    phone: form.email.value // Using email as phone since it's required by the API
+                    phone: form.phone ? form.phone.value : form.email.value // Use phone if available, otherwise use email
                 })
             });
 
@@ -291,7 +291,16 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Order creation response:', orderData);
 
             if (!orderData.success) {
-                throw new Error(orderData.message || 'Failed to create order');
+                // Handle validation errors specifically
+                if (orderData.errors) {
+                    const errorMessages = [];
+                    for (const field in orderData.errors) {
+                        errorMessages.push(orderData.errors[field].join(' '));
+                    }
+                    throw new Error(errorMessages.join('<br>') || orderData.message || 'Failed to create order');
+                } else {
+                    throw new Error(orderData.message || 'Failed to create order');
+                }
             }
 
             console.log('Initializing Razorpay...');
@@ -327,7 +336,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (data.success) {
                             window.location.href = '{{ route('products.thank-you') }}?order=' + data.order.order_number;
                         } else {
-                            throw new Error(data.message || 'Payment verification failed');
+                            // Handle validation errors specifically
+                            if (data.errors) {
+                                const errorMessages = [];
+                                for (const field in data.errors) {
+                                    errorMessages.push(data.errors[field].join(' '));
+                                }
+                                throw new Error(errorMessages.join('<br>') || data.message || 'Payment verification failed');
+                            } else {
+                                throw new Error(data.message || 'Payment verification failed');
+                            }
                         }
                     } catch (error) {
                         console.error('Payment verification error:', error);
@@ -338,7 +356,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 prefill: {
                     name: form.name.value,
-                    email: form.email.value
+                    email: form.email.value,
+                    contact: form.phone ? form.phone.value : form.email.value
                 },
                 theme: {
                     color: '#4F46E5'

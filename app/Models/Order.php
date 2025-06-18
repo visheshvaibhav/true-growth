@@ -13,7 +13,11 @@ class Order extends Model
         'order_number',
         'customer_name',
         'customer_email',
+        'customer_phone',
         'amount',
+        'original_amount',
+        'discount_amount',
+        'coupon_code',
         'razorpay_payment_id',
         'razorpay_order_id',
         'razorpay_signature',
@@ -23,6 +27,8 @@ class Order extends Model
 
     protected $casts = [
         'amount' => 'decimal:2',
+        'original_amount' => 'decimal:2',
+        'discount_amount' => 'decimal:2',
         'downloaded_at' => 'datetime',
     ];
 
@@ -31,7 +37,9 @@ class Order extends Model
         parent::boot();
 
         static::creating(function ($order) {
-            $order->order_number = static::generateOrderNumber();
+            if (!$order->order_number) {
+                $order->order_number = static::generateOrderNumber();
+            }
         });
     }
 
@@ -53,7 +61,6 @@ class Order extends Model
     {
         return route('download.product', [
             'order' => $this->order_number,
-            'token' => $this->download_token,
         ]);
     }
 } 

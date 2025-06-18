@@ -22,6 +22,9 @@ jobs:
           port: 22
           script: |
             cd /var/www/html/true-growth
+            sudo chown -R $USER:$USER /var/www/html/true-growth
+            sudo chmod -R 775 storage bootstrap/cache
+            sudo chmod 664 database/database.sqlite
             git config --global --add safe.directory /var/www/html/true-growth
             git -c safe.directory=/var/www/html/true-growth pull origin main
             composer install --no-interaction --prefer-dist --optimize-autoloader
@@ -30,3 +33,6 @@ jobs:
             sudo php artisan migrate --force
             sudo php artisan config:cache
             sudo php artisan route:cache
+            sudo chown -R www-data:www-data /var/www/html/true-growth
+            sudo chmod -R 775 storage bootstrap/cache
+            sudo chmod 664 database/database.sqlite
