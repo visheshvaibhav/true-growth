@@ -181,9 +181,12 @@ class OrderController extends Controller
         return redirect()->back()->with('error', 'Payment failed. Please try again.');
     }
 
-    public function showThankYou(Order $order)
+    public function showThankYou($orderNumber)
     {
-        // Ensure the order exists and belongs to the customer
+        // Find the order by order_number
+        $order = Order::where('order_number', $orderNumber)->firstOrFail();
+        
+        // Ensure the order exists and is completed
         if (!$order || $order->status !== 'completed') {
             abort(404);
         }

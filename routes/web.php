@@ -58,7 +58,6 @@ Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])
 Route::get('/products', [DigitalProductController::class, 'index'])->name('products.index');
 Route::get('/products/{product:slug}', [DigitalProductController::class, 'show'])->name('products.show');
 Route::get('/products/{product:slug}/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
-Route::view('/thank-you', 'products.thank-you')->name('products.thank-you');
 
 // Orders & Downloads
 Route::post('/orders/{product:slug}/create', [OrderController::class, 'create'])->name('orders.create');
@@ -78,7 +77,7 @@ Route::post('/webhooks/razorpay', [WebhookController::class, 'handleRazorpay'])
 // Coupon Routes
 Route::post('/coupons/validate', [CouponController::class, 'validate'])->name('coupons.validate');
 
-Route::get('/thank-you/{order}', [OrderController::class, 'showThankYou'])->name('thank-you');
+Route::get('/thank-you/{order_number}', [OrderController::class, 'showThankYou'])->name('thank-you');
 Route::get('/download/{order}', [OrderController::class, 'download'])->name('orders.download');
 
 // Product File Routes
