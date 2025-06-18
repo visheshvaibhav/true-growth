@@ -589,7 +589,7 @@
                                 if (verifyData.success) {
                                     this.step = 3;
                                     setTimeout(() => {
-                                        window.location.href = '{{ route('thank-you', ['order_number' => '']) }}' + verifyData.order.order_number;
+                                        window.location.href = '/thank-you/' + verifyData.order.order_number;
                                     }, 2000);
                                 } else {
                                     // Handle validation errors specifically
