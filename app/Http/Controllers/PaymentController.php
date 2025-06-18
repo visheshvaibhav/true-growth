@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Razorpay\Api\Api;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Config;
 
 class PaymentController extends Controller
 {
@@ -17,10 +18,27 @@ class PaymentController extends Controller
 
     public function __construct()
     {
-        $this->razorpay = new Api(
-            env('RAZORPAY_KEY'),
-            env('RAZORPAY_SECRET')
-        );
+        try {
+            $key = Config::get('services.razorpay.key');
+            $secret = Config::get('services.razorpay.secret');
+            
+            // Fallback to env if config is not set
+            if (empty($key) || empty($secret)) {
+                $key = env('RAZORPAY_KEY');
+                $secret = env('RAZORPAY_SECRET');
+                
+                // Log this fallback for debugging
+                Log::info('Using env variables for Razorpay keys instead of config');
+            }
+            
+            // Log the key being used (first 4 chars only for security)
+            Log::info('Initializing Razorpay with key: ' . substr($key, 0, 4) . '...');
+            
+            $this->razorpay = new Api($key, $secret);
+        } catch (\Exception $e) {
+            Log::error('Failed to initialize Razorpay API: ' . $e->getMessage());
+            // Continue execution, the error will be caught when API is used
+        }
     }
 
     /**
@@ -168,8 +186,14 @@ class PaymentController extends Controller
             $paymentId = $request->razorpay_payment_id;
             $orderId = $request->razorpay_order_id;
 
+            // Get the Razorpay secret from config
+            $secret = Config::get('services.razorpay.secret');
+            if (empty($secret)) {
+                $secret = env('RAZORPAY_SECRET');
+            }
+
             // Generate signature and verify
-            $generated_signature = hash_hmac('sha256', $orderId . "|" . $paymentId, env('RAZORPAY_SECRET'));
+            $generated_signature = hash_hmac('sha256', $orderId . "|" . $paymentId, $secret);
 
             if ($generated_signature !== $signature) {
                 Log::warning('Razorpay signature verification failed', [

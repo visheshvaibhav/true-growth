@@ -501,6 +501,14 @@
                     console.log('Order creation response:', orderData);
                     
                     if (!orderData.success) {
+                        // Check for authentication errors specifically
+                        if (orderData.message && orderData.message.includes('Authentication failed')) {
+                            console.error('Razorpay authentication failed');
+                            window.createNotification('Payment gateway authentication failed. Please contact support with error code: RZP-AUTH-01', 'error');
+                            this.loading = false;
+                            return;
+                        }
+                        
                         // Handle validation errors specifically
                         if (orderData.errors) {
                             const errorMessages = [];
