@@ -190,6 +190,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Create notification element for non-blocking messages
     const createNotification = (message, type = 'error') => {
+        // Ensure message is a string
+        const safeMessage = typeof message === 'string' ? message : 'An error occurred';
+        
         const notificationDiv = document.createElement('div');
         notificationDiv.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-opacity duration-500 ${
             type === 'error' ? 'bg-red-50 text-red-700 border border-red-200' : 
@@ -206,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 </div>
                 <div class="ml-3">
-                    <p class="text-sm font-medium">${message}</p>
+                    <p class="text-sm font-medium">${safeMessage}</p>
                 </div>
                 <div class="ml-auto pl-3">
                     <button class="inline-flex text-gray-400 hover:text-gray-500">
@@ -281,9 +284,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: JSON.stringify({
                     product_id: {{ $product->id }},
-                    name: form.name.value,
-                    email: form.email.value,
-                    phone: form.phone ? form.phone.value : form.email.value // Use phone if available, otherwise use email
+                    name: form.name?.value || '',
+                    email: form.email?.value || '',
+                    phone: form.phone?.value || form.email?.value || ''
                 })
             });
 
@@ -355,9 +358,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 },
                 prefill: {
-                    name: form.name.value,
-                    email: form.email.value,
-                    contact: form.phone ? form.phone.value : form.email.value
+                    name: form.name?.value || '',
+                    email: form.email?.value || '',
+                    contact: form.phone?.value || form.email?.value || ''
                 },
                 theme: {
                     color: '#4F46E5'

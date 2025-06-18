@@ -32,6 +32,9 @@ class PaymentController extends Controller
     public function createOrder(Request $request): JsonResponse
     {
         try {
+            // Log the incoming request data for debugging
+            Log::info('Razorpay order creation request:', $request->all());
+            
             // Validate request data
             $validator = Validator::make($request->all(), [
                 'product_id' => 'required|exists:digital_products,id',
@@ -42,10 +45,11 @@ class PaymentController extends Controller
             ]);
 
             if ($validator->fails()) {
+                Log::warning('Razorpay order validation failed:', $validator->errors()->toArray());
                 return response()->json([
                     'success' => false,
                     'message' => 'Validation failed',
-                    'errors' => $validator->errors()
+                    'errors' => $validator->errors()->toArray()
                 ], 422);
             }
 
@@ -89,6 +93,11 @@ class PaymentController extends Controller
                 'status' => 'pending'
             ]);
 
+            Log::info('Razorpay order created successfully', [
+                'order_id' => $order->id,
+                'temp_order_id' => $tempOrder->id
+            ]);
+
             return response()->json([
                 'success' => true,
                 'order_id' => $order->id,
@@ -103,7 +112,9 @@ class PaymentController extends Controller
                 'errors' => $e->errors()
             ], 422);
         } catch (\Exception $e) {
-            Log::error('Razorpay order creation failed: ' . $e->getMessage());
+            Log::error('Razorpay order creation failed: ' . $e->getMessage(), [
+                'request' => $request->all()
+            ]);
             
             return response()->json([
                 'success' => false,
@@ -121,6 +132,9 @@ class PaymentController extends Controller
     public function verifyPayment(Request $request): JsonResponse
     {
         try {
+            // Log the incoming request data for debugging
+            Log::info('Razorpay payment verification request:', $request->all());
+            
             $validator = Validator::make($request->all(), [
                 'razorpay_payment_id' => 'required|string',
                 'razorpay_order_id' => 'required|string',
@@ -129,10 +143,11 @@ class PaymentController extends Controller
             ]);
 
             if ($validator->fails()) {
+                Log::warning('Razorpay payment validation failed:', $validator->errors()->toArray());
                 return response()->json([
                     'success' => false,
                     'message' => 'Validation failed',
-                    'errors' => $validator->errors()
+                    'errors' => $validator->errors()->toArray()
                 ], 422);
             }
 
@@ -144,6 +159,11 @@ class PaymentController extends Controller
             $generated_signature = hash_hmac('sha256', $orderId . "|" . $paymentId, env('RAZORPAY_SECRET'));
 
             if ($generated_signature !== $signature) {
+                Log::warning('Razorpay signature verification failed', [
+                    'expected' => $generated_signature,
+                    'received' => $signature
+                ]);
+                
                 return response()->json([
                     'success' => false,
                     'message' => 'Payment verification failed. Invalid signature.'
@@ -156,6 +176,11 @@ class PaymentController extends Controller
                 'razorpay_payment_id' => $paymentId,
                 'razorpay_signature' => $signature,
                 'status' => 'completed'
+            ]);
+
+            Log::info('Razorpay payment verified successfully', [
+                'order_id' => $order->id,
+                'payment_id' => $paymentId
             ]);
 
             return response()->json([
@@ -171,7 +196,9 @@ class PaymentController extends Controller
                 'errors' => $e->errors()
             ], 422);
         } catch (\Exception $e) {
-            Log::error('Razorpay payment verification failed: ' . $e->getMessage());
+            Log::error('Razorpay payment verification failed: ' . $e->getMessage(), [
+                'request' => $request->all()
+            ]);
             
             return response()->json([
                 'success' => false,

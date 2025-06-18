@@ -385,6 +385,9 @@
             
             // Create notification element for non-blocking messages
             const createNotification = (message, type = 'error') => {
+                // Ensure message is a string
+                const safeMessage = typeof message === 'string' ? message : 'An error occurred';
+                
                 const notificationDiv = document.createElement('div');
                 notificationDiv.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-opacity duration-500 ${
                     type === 'error' ? 'bg-red-50 text-red-700 border border-red-200' : 
@@ -401,7 +404,7 @@
                             }
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium">${message}</p>
+                            <p class="text-sm font-medium">${safeMessage}</p>
                         </div>
                         <div class="ml-auto pl-3">
                             <button class="inline-flex text-gray-400 hover:text-gray-500">
@@ -457,7 +460,7 @@
                             errorMessages.push(orderData.errors[field].join(' '));
                             
                             // Update Alpine.js form errors
-                            if (field in app.formData) {
+                            if (app.formData && field in app.formData) {
                                 app.errors[field] = orderData.errors[field][0];
                             }
                         }
