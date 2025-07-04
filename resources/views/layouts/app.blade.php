@@ -123,7 +123,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                             </svg>
                             <span class="text-gray-600">
-                            55 Parkdale Ave N, Hamilton, ON L8H 5W7
+                           178 Robie St, Truro, NS B2N 1L1
                             </span>
                         </li>
                         <li class="flex items-center">
