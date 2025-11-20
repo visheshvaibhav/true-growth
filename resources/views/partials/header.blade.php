@@ -102,7 +102,7 @@
                 </div>
             </div>
 
-            <a href="{{ route('portfolio') }}" class="block px-3 py-2 text-gray-700 hover:text-indigo-600 transition-colors">Our Work</a>
+            <a href="{{ route('work') }}" class="block px-3 py-2 text-gray-700 hover:text-indigo-600 transition-colors">Our Work</a>
             <a href="{{ route('about') }}" class="block px-3 py-2 text-gray-700 hover:text-indigo-600 transition-colors">About</a>
             <a href="{{ route('careers') }}" class="block px-3 py-2 text-gray-700 hover:text-indigo-600 transition-colors">Careers</a>
             <a href="{{ route('contact') }}" class="block px-3 py-2 text-indigo-600 font-medium">Let's Talk</a>

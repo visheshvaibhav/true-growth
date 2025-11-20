@@ -83,7 +83,7 @@
                             <a href="/services" class="text-gray-600 hover:text-indigo-600 transition-colors">Services</a>
                         </li>
                         <li>
-                            <a href="/portfolio" class="text-gray-600 hover:text-indigo-600 transition-colors">Portfolio</a>
+                            <a href="/work" class="text-gray-600 hover:text-indigo-600 transition-colors">Portfolio</a>
                         </li>
                         <li>
                             <a href="/careers" class="text-gray-600 hover:text-indigo-600 transition-colors">Careers</a>

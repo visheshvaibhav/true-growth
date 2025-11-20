@@ -25,7 +25,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/services', [ServicesController::class, 'index'])->name('services.index');
 Route::get('/services/{service}', [ServicesController::class, 'show'])->name('services.show');
-Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
+Route::get('/work', [PortfolioController::class, 'index'])->name('work');
 
 // Blog Routes
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
@@ -66,14 +66,12 @@ Route::get('/thank-you', function() {
         return redirect()->route('home');
     }
     
-    // Find the order and eager load the digital product
-    $order = \App\Models\Order::with('digitalProduct')
-        ->where('order_number', $orderNumber)
-        ->firstOrFail();
+    // Find the order
+    $order = \App\Models\Order::where('order_number', $orderNumber)->firstOrFail();
     
     // Generate a signed download URL that expires in 24 hours
     $downloadUrl = \Illuminate\Support\Facades\URL::temporarySignedRoute(
-        'products.signed-download',
+        'download.product',
         now()->addHours(24),
         ['order' => $order->order_number]
     );
@@ -84,6 +82,9 @@ Route::get('/thank-you', function() {
 // Orders & Downloads
 Route::post('/orders/{product:slug}/create', [OrderController::class, 'create'])->name('orders.create');
 Route::post('/orders/{product:slug}', [OrderController::class, 'store'])->name('orders.store');
+Route::get('/download/{order:order_number}', [DownloadController::class, 'show'])
+    ->name('download.product')
+    ->middleware('signed');
 
 // Razorpay Payment Routes
 Route::post('/razorpay/order', [PaymentController::class, 'createOrder'])->name('razorpay.order');
@@ -97,6 +98,7 @@ Route::post('/webhooks/razorpay', [WebhookController::class, 'handleRazorpay'])
 Route::post('/coupons/validate', [CouponController::class, 'validate'])->name('coupons.validate');
 
 Route::get('/thank-you/{order}', [OrderController::class, 'showThankYou'])->name('thank-you');
+Route::get('/download/{order}', [OrderController::class, 'download'])->name('orders.download');
 
 // Product File Routes
 Route::middleware(['auth'])->group(function () {
@@ -107,45 +109,3 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/orders/{order}/download', [ProductFileController::class, 'download'])
     ->name('products.signed-download')
     ->middleware('signed');
-
-// Test download route
-Route::get('/test-download', function() {
-    \Log::info('Test download route accessed');
-    
-    if (Storage::exists('test-download.txt')) {
-        \Log::info('Test file exists, attempting download');
-        return Storage::download('test-download.txt', 'test.txt', ['Content-Type' => 'text/plain']);
-    }
-    
-    \Log::error('Test file does not exist');
-    return response('Test file not found', 404);
-})->name('test.download');
-
-// Direct product download test route
-Route::get('/direct-download/{product_id}', function($product_id) {
-    \Log::info('Direct download route accessed', ['product_id' => $product_id]);
-    
-    $product = \App\Models\DigitalProduct::find($product_id);
-    
-    if (!$product) {
-        \Log::error('Product not found', ['product_id' => $product_id]);
-        return response('Product not found', 404);
-    }
-    
-    \Log::info('Product found', [
-        'product_id' => $product->id,
-        'file_path' => $product->file_path,
-        'file_exists' => Storage::exists($product->file_path)
-    ]);
-    
-    if (!$product->file_path || !Storage::exists($product->file_path)) {
-        \Log::error('File not found', ['file_path' => $product->file_path]);
-        return response('File not found', 404);
-    }
-    
-    return Storage::download(
-        $product->file_path,
-        $product->original_filename ?? 'download.pdf',
-        ['Content-Type' => $product->mime_type ?? 'application/pdf']
-    );
-})->name('direct.download');

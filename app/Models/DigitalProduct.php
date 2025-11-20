@@ -17,9 +17,6 @@ class DigitalProduct extends Model
         'sale_price',
         'sale_ends_at',
         'file_path',
-        'original_filename',
-        'file_size',
-        'mime_type',
         'thumbnail_path',
         'images',
         'is_active',
@@ -32,12 +29,11 @@ class DigitalProduct extends Model
         'is_active' => 'boolean',
         'original_price' => 'decimal:2',
         'sale_price' => 'decimal:2',
-        'file_size' => 'integer',
     ];
 
     public function orders(): HasMany
     {
-        return $this->hasMany(Order::class, 'digital_product_id');
+        return $this->hasMany(Order::class);
     }
 
     public function getDiscountPercentageAttribute(): int

@@ -236,7 +236,7 @@
                     <p class="text-xl mb-10 max-w-2xl mx-auto">
                         We're always looking for talented individuals to join our team. Send us your resume and we'll keep you in mind for future opportunities.
                     </p>
-                    <a href="mailto:careers@truegrowth.ai" class="inline-flex items-center justify-center px-8 py-4 text-lg font-medium bg-white text-indigo-600 rounded-full hover:bg-indigo-50 transition-colors duration-300">
+                    <a href="mailto:careers@thetruegrowth.com" class="inline-flex items-center justify-center px-8 py-4 text-lg font-medium bg-white text-indigo-600 rounded-full hover:bg-indigo-50 transition-colors duration-300">
                         Contact Our Recruiting Team
                         <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>

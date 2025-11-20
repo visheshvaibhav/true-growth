@@ -448,7 +448,7 @@
                             <!-- Gradient Circle -->
                             <div class="absolute inset-0 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500"></div>
                             <!-- Your PNG Image -->
-                            <img src="/images/about/bhawna.png" alt="Vishesh Vaibhav" class="relative w-24 h-24 rounded-full object-cover">
+                            <img src="/images/about/bhawna.png" alt="" class="relative w-24 h-24 rounded-full object-cover">
                         </div>
                         <div class="text-center">
                             <h3 class="text-xl font-bold">Bhawna Lal</h3>
@@ -467,10 +467,10 @@
                             <!-- Gradient Circle -->
                             <div class="absolute inset-0 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500"></div>
                             <!-- Your PNG Image -->
-                            <img src="/images/about/me.png" alt="Vishesh Vaibhav" class="relative w-24 h-24 rounded-full object-cover">
+                            <img src="/images/about/e.png" alt="" class="relative w-24 h-24 rounded-full object-cover">
                         </div>
                         <div class="text-center">
-                        <h3 class="text-xl font-bold">Vishesh Vaibhav</h3>
+                        <h3 class="text-xl font-bold">vv</h3>
                             <p class="text-purple-600 mb-4">CTO</p>
                             <p class="text-gray-600">AI Expert and Tech Innovation Leader with a focus on scalable solutions with 5+ years of experience in the</p>
                         </div>
@@ -485,8 +485,6 @@
                         <div class="relative w-24 h-24 mx-auto mb-6">
                             <!-- Gradient Circle -->
                             <div class="absolute inset-0 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500"></div>
-                            <!-- Your PNG Image -->
-                            <!-- <img src="/images/about/" alt="Vishesh Vaibhav" class="relative w-24 h-24 rounded-full object-cover"> -->
                         </div>
                         <div class="text-center">
                         <h3 class="text-xl font-bold">Naman Arora</h3>

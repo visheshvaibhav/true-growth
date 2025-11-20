@@ -22,7 +22,8 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        return $panel
+        // Start with chaining all correct Panel methods
+        $panel = $panel
             ->default()
             ->id('admin')
             ->path('admin')
@@ -54,5 +55,13 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+
+        // Auth must be called AFTER the full panel config
+        $panel->auth(function () {
+            return auth()->check();
+            \Log::info('Filament auth hit', ['user_id' => auth()->id()]);
+        });
+
+        return $panel;
     }
 }

@@ -105,7 +105,7 @@
                         </div>
                         <h3 class="text-xl font-bold mb-4">Email Us</h3>
                         <p class="text-gray-600 mb-4">Get in touch via email</p>
-                        <a href="mailto:contact@truegrowth.ai" class="text-purple-600 hover:text-purple-700 font-medium">contact@truegrowth.ai</a>
+                        <a href="mailto:info@thetruegrowth.com" class="text-purple-600 hover:text-purple-700 font-medium">info@thetruegrowth.com</a>
                     </div>
                 </div>
 
