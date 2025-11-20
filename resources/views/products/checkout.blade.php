@@ -128,12 +128,13 @@
                             
                             <div class="mt-6">
                                 <button 
-                                    @click="initializePayment()"
-                                    class="w-full flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-medium rounded-xl text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 transform hover:scale-[1.02]"
+                                    @click.prevent="if (!loading) initializePayment()"
+                                    type="button"
+                                    class="w-full flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-medium rounded-xl text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-75 disabled:cursor-not-allowed"
                                     :class="{ 'opacity-75 cursor-not-allowed': loading }"
                                     :disabled="loading"
                                 >
-                                    <span x-show="!loading">Pay ₹{{ number_format($product->current_price, 2) }}</span>
+                                    <span x-show="!loading" x-text="'Pay ₹' + getFinalAmount().toFixed(2)"></span>
                                     <span x-show="loading" class="flex items-center">
                                         <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -206,40 +207,7 @@
                         </div>
 
                         <!-- Coupon Code Section -->
-                        <div x-data="{ 
-                            showCouponInput: false,
-                            couponCode: '',
-                            couponLoading: false,
-                            couponError: '',
-                            appliedCoupon: null,
-                            async applyCoupon() {
-                                this.couponLoading = true;
-                                this.couponError = '';
-                                try {
-                                    const response = await fetch('{{ route('coupons.validate') }}', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                        },
-                                        body: JSON.stringify({
-                                            code: this.couponCode,
-                                            amount: {{ $product->current_price }}
-                                        })
-                                    });
-                                    const data = await response.json();
-                                    if (data.success) {
-                                        this.appliedCoupon = data.coupon;
-                                        this.showCouponInput = false;
-                                    } else {
-                                        this.couponError = data.message;
-                                    }
-                                } catch (error) {
-                                    this.couponError = 'Failed to apply coupon';
-                                }
-                                this.couponLoading = false;
-                            }
-                        }" class="space-y-3 mb-6">
+                        <div class="space-y-3 mb-6">
                             <div x-show="!showCouponInput && !appliedCoupon" class="flex items-center justify-between">
                                 <button 
                                     @click="showCouponInput = true"
@@ -420,6 +388,12 @@
             },
             errors: {},
             loading: false,
+            // Coupon data - moved to main scope
+            showCouponInput: false,
+            couponCode: '',
+            couponLoading: false,
+            couponError: '',
+            appliedCoupon: null,
             validateStep1() {
                 this.errors = {};
                 if (!this.formData.name) this.errors.name = 'Name is required';
@@ -432,6 +406,40 @@
                 
                 return Object.keys(this.errors).length === 0;
             },
+            async applyCoupon() {
+                this.couponLoading = true;
+                this.couponError = '';
+                try {
+                    const response = await fetch('{{ route('coupons.validate') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            code: this.couponCode,
+                            amount: {{ $product->current_price }}
+                        })
+                    });
+                    const data = await response.json();
+                    if (data.success) {
+                        this.appliedCoupon = data.coupon;
+                        this.showCouponInput = false;
+                        console.log('Coupon applied successfully:', this.appliedCoupon);
+                    } else {
+                        this.couponError = data.message;
+                    }
+                } catch (error) {
+                    this.couponError = 'Failed to apply coupon';
+                }
+                this.couponLoading = false;
+            },
+            getFinalAmount() {
+                if (this.appliedCoupon && this.appliedCoupon.final_amount) {
+                    return this.appliedCoupon.final_amount;
+                }
+                return {{ $product->current_price }};
+            },
             init() {
                 // Debug Alpine.js data changes
                 this.$watch('formData', (value) => {
@@ -439,6 +447,11 @@
                     
                     // Store in local storage for persistence
                     localStorage.setItem('checkout_form_data', JSON.stringify(value));
+                });
+                
+                // Watch for coupon changes
+                this.$watch('appliedCoupon', (value) => {
+                    console.log('Coupon changed:', value);
                 });
                 
                 // Try to restore from local storage
@@ -454,6 +467,12 @@
                 }
             },
             initializePayment() {
+                // Prevent multiple simultaneous payment processing
+                if (this.loading) {
+                    console.log('Payment already processing, ignoring click');
+                    return;
+                }
+                
                 this.loading = true;
                 
                 // Debug Alpine.js data
@@ -605,6 +624,14 @@
                     };
 
                     const rzp = new Razorpay(options);
+                    
+                    // Add error handler for when modal fails to open
+                    rzp.on('payment.failed', function (response){
+                        console.error('Payment failed:', response.error);
+                        window.createNotification('Payment failed: ' + response.error.description, 'error');
+                        this.loading = false;
+                    }.bind(this));
+                    
                     rzp.open();
                 } catch (error) {
                     console.error('Payment initialization error:', error);
