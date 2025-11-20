@@ -53,12 +53,12 @@
             <div class="px-6 py-4">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 w-20 h-20 bg-gray-200 rounded-lg overflow-hidden">
-                        @if($order->product->image)
-                            <img src="{{ $order->product->image }}" alt="{{ $order->product->name }}" class="w-full h-full object-cover">
+                        @if($order->digitalProduct && $order->digitalProduct->image)
+                            <img src="{{ $order->digitalProduct->image }}" alt="{{ $order->digitalProduct->name }}" class="w-full h-full object-cover">
                         @endif
                     </div>
                     <div class="ml-6">
-                        <h3 class="text-base font-medium text-gray-900">{{ $order->product->name }}</h3>
+                        <h3 class="text-base font-medium text-gray-900">{{ $order->digitalProduct->name ?? 'Digital Product' }}</h3>
                         <p class="mt-1 text-sm text-gray-500">Digital Product</p>
                     </div>
                 </div>

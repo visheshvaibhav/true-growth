@@ -62,7 +62,7 @@ class Order extends Model
 
     public function getDownloadUrl(): string
     {
-        return route('download.product', [
+        return route('products.signed-download', [
             'order' => $this->order_number,
         ]);
     }

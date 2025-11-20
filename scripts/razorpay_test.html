@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Razorpay Test</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <h1>Razorpay Integration Test</h1>
+    <button id="pay-button">Test Razorpay Integration</button>
+    
+    <script>
+        document.getElementById('pay-button').addEventListener('click', function() {
+            var options = {
+                "key": "rzp_test_nBOm2FtCxfd2KQ",
+                "amount": "100", // 1 INR in paise
+                "currency": "INR",
+                "name": "Test Company",
+                "description": "Test Transaction",
+                "handler": function (response){
+                    alert('Success: ' + response.razorpay_payment_id);
+                },
+                "prefill": {
+                    "name": "Test User",
+                    "email": "test@example.com",
+                    "contact": "9999999999"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            
+            try {
+                var rzp = new Razorpay(options);
+                rzp.open();
+                document.body.innerHTML += '<p>✅ Razorpay initialized successfully!</p>';
+            } catch (e) {
+                document.body.innerHTML += '<p>❌ Razorpay initialization failed: ' + e.message + '</p>';
+            }
+        });
+        
+        // Check if Razorpay is loaded
+        if (typeof Razorpay !== 'undefined') {
+            document.body.innerHTML += '<p>✅ Razorpay script loaded successfully!</p>';
+        } else {
+            document.body.innerHTML += '<p>❌ Razorpay script failed to load!</p>';
+        }
+    </script>
+</body>
+</html>
